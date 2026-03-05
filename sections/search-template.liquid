@@ -1,0 +1,43 @@
+<section class="search-page">
+  <div class="search-page__container">
+
+    {%- comment -%} ── Results header ──────────────────────────────────────── {%- endcomment -%}
+    {%- if search.performed -%}
+      <div class="search-page__header">
+        {%- if search.results_count > 0 -%}
+          <h1 class="search-page__title">
+            {{ search.results_count }} resultado{% if search.results_count != 1 %}s{% endif %}
+            para <em>"{{ search.terms | escape }}"</em>
+          </h1>
+        {%- else -%}
+          <h1 class="search-page__title search-page__title--empty">
+            Sin resultados para <em>"{{ search.terms | escape }}"</em>
+          </h1>
+          <p class="search-page__empty-hint">Intenta con palabras más cortas o revisa la ortografía.</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ── Results grid ─────────────────────────────────────── {%- endcomment -%}
+      {%- if search.results_count > 0 -%}
+        <div class="collection-grid" role="list" style="--col-count: 4;">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {%- render 'product-card', card_product: item, show_compare: true -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+    {%- else -%}
+      <p class="search-page__hint">Escribe en el buscador para encontrar productos.</p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Resultados de búsqueda",
+  "settings": []
+}
+{% endschema %}

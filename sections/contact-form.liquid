@@ -1,0 +1,207 @@
+<div class="contact-page">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="contact-page__header">
+      <h1 class="contact-page__title">{{ section.settings.title | default: 'Buscamos Distribuidores' }}</h1>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="contact-page__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="contact-page__layout">
+
+      <!-- Info lateral -->
+      <div class="contact-page__info">
+        {%- if section.settings.info_title != blank -%}
+          <h2 class="contact-info__title">{{ section.settings.info_title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.info_text != blank -%}
+          <div class="contact-info__text">{{ section.settings.info_text }}</div>
+        {%- endif -%}
+        {%- if section.settings.email != blank -%}
+          <p class="contact-info__row">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/>
+            </svg>
+            <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+          </p>
+        {%- endif -%}
+        {%- if section.settings.phone != blank -%}
+          <p class="contact-info__row">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.4 19 19.44 19.44 0 0 1 3 10.6 19.79 19.79 0 0 1 .9 4.18 2 2 0 0 1 2.86 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/>
+            </svg>
+            <a href="tel:{{ section.settings.phone }}">{{ section.settings.phone }}</a>
+          </p>
+        {%- endif -%}
+      </div>
+
+      <!-- Formulario -->
+      <div class="contact-page__form-wrap">
+        {%- form 'contact', id: 'ContactForm' -%}
+
+          {%- if form.posted_successfully? -%}
+            <div class="contact-form__success" role="alert">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span>{{ section.settings.success_msg | default: '¡Gracias! Nos pondremos en contacto contigo pronto.' }}</span>
+            </div>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="contact-form__error" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="contact-form__row contact-form__row--2col">
+            <div class="contact-form__field">
+              <label class="contact-form__label" for="ContactFormName">Nombre completo <span aria-hidden="true">*</span></label>
+              <input
+                class="contact-form__input"
+                type="text"
+                id="ContactFormName"
+                name="contact[name]"
+                value="{{ form.name }}"
+                autocomplete="name"
+                required
+                placeholder="Tu nombre"
+              >
+            </div>
+            <div class="contact-form__field">
+              <label class="contact-form__label" for="ContactFormEmail">Correo electrónico <span aria-hidden="true">*</span></label>
+              <input
+                class="contact-form__input"
+                type="email"
+                id="ContactFormEmail"
+                name="contact[email]"
+                value="{{ form.email }}"
+                autocomplete="email"
+                required
+                placeholder="correo@empresa.com"
+              >
+            </div>
+          </div>
+
+          <div class="contact-form__row contact-form__row--2col">
+            <div class="contact-form__field">
+              <label class="contact-form__label" for="ContactFormPhone">Teléfono</label>
+              <input
+                class="contact-form__input"
+                type="tel"
+                id="ContactFormPhone"
+                name="contact[phone]"
+                autocomplete="tel"
+                placeholder="+52 000 000 0000"
+              >
+            </div>
+            <div class="contact-form__field">
+              <label class="contact-form__label" for="ContactFormCompany">Empresa / Clínica</label>
+              <input
+                class="contact-form__input"
+                type="text"
+                id="ContactFormCompany"
+                name="contact[company]"
+                placeholder="Nombre de tu empresa"
+              >
+            </div>
+          </div>
+
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="ContactFormCity">Ciudad / Estado</label>
+            <input
+              class="contact-form__input"
+              type="text"
+              id="ContactFormCity"
+              name="contact[city]"
+              placeholder="Ciudad, Estado"
+            >
+          </div>
+
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="ContactFormMessage">Mensaje <span aria-hidden="true">*</span></label>
+            <textarea
+              class="contact-form__input contact-form__textarea"
+              id="ContactFormMessage"
+              name="contact[body]"
+              rows="5"
+              required
+              placeholder="Cuéntanos sobre tu negocio y cuántos productos necesitas..."
+            >{{ form.body }}</textarea>
+          </div>
+
+          <button type="submit" class="contact-form__submit btn btn--primary">
+            {{ section.settings.btn_label | default: 'Enviar solicitud' }}
+          </button>
+
+        {%- endform -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Formulario de contacto",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Buscamos Distribuidores"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "¿Tienes un negocio dental? Únete a nuestra red de distribuidores y ofrece los mejores productos Kingden."
+    },
+    {
+      "type": "text",
+      "id": "info_title",
+      "label": "Título de columna info",
+      "default": "¿Por qué ser distribuidor?"
+    },
+    {
+      "type": "richtext",
+      "id": "info_text",
+      "label": "Texto informativo",
+      "default": "<p>✔ Precios preferenciales de mayoreo</p><p>✔ Catálogo completo de productos odontológicos</p><p>✔ Soporte y capacitación incluidos</p><p>✔ Envíos a toda la República</p>"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Correo de contacto",
+      "default": "distribuidores@kingden.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Teléfono de contacto"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Texto del botón",
+      "default": "Enviar solicitud"
+    },
+    {
+      "type": "text",
+      "id": "success_msg",
+      "label": "Mensaje de éxito",
+      "default": "¡Gracias! Nos pondremos en contacto contigo pronto."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Formulario de contacto"
+    }
+  ]
+}
+{% endschema %}

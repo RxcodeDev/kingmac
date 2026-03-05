@@ -1,0 +1,59 @@
+{%- comment -%}
+  SNIPPET: social-icons.liquid
+  Renders the configured social network links.
+  Falls back to placeholder links when no URLs are set in theme settings.
+
+  Parameters:
+    - icon_size  {integer}  Optional. Icon size in px. Default: 28.
+{%- endcomment -%}
+
+{%- assign _size      = icon_size | default: 28 -%}
+{%- assign _has_social = false -%}
+{%- if settings.social_tiktok != blank
+      or settings.social_instagram != blank
+      or settings.social_facebook != blank -%}
+  {%- assign _has_social = true -%}
+{%- endif -%}
+
+<div class="footer-col__social" aria-label="Redes sociales">
+
+  {%- if _has_social -%}
+
+    {%- if settings.social_tiktok != blank -%}
+      <a href="{{ settings.social_tiktok }}" class="footer-col__social-link"
+        target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        {%- assign icon_name = 'tiktok' -%}
+        {%- assign icon_size = _size -%}
+        {%- render 'icon', icon_name: 'tiktok', icon_size: _size -%}
+      </a>
+    {%- endif -%}
+
+    {%- if settings.social_instagram != blank -%}
+      <a href="{{ settings.social_instagram }}" class="footer-col__social-link"
+        target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        {%- render 'icon', icon_name: 'instagram', icon_size: _size -%}
+      </a>
+    {%- endif -%}
+
+    {%- if settings.social_facebook != blank -%}
+      <a href="{{ settings.social_facebook }}" class="footer-col__social-link"
+        target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        {%- render 'icon', icon_name: 'facebook', icon_size: _size -%}
+      </a>
+    {%- endif -%}
+
+  {%- else -%}
+
+    <a href="#" class="footer-col__social-link" aria-label="TikTok">
+      {%- render 'icon', icon_name: 'tiktok', icon_size: _size -%}
+    </a>
+    <a href="#" class="footer-col__social-link" aria-label="Instagram">
+      {%- render 'icon', icon_name: 'instagram', icon_size: _size -%}
+    </a>
+    <a href="#" class="footer-col__social-link" aria-label="Facebook">
+      {%- render 'icon', icon_name: 'facebook', icon_size: _size -%}
+    </a>
+
+  {%- endif -%}
+
+</div>

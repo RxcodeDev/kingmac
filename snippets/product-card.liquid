@@ -1,0 +1,97 @@
+{%- comment -%}
+  SNIPPET: product-card.liquid
+  Renders a single product card for use in any product grid.
+
+  Parameters (assign before rendering):
+    - card_product   {product}  Required. The Shopify product object.
+    - card_section   {section}  Optional. Parent section (for default_desc fallback).
+    - show_compare   {boolean}  Optional. Show compare-at price when true. Default: true.
+{%- endcomment -%}
+
+{%- assign _show_compare = show_compare | default: true -%}
+{%- assign first_variant = card_product.first_available_variant | default: card_product.variants.first -%}
+{%- assign default_desc = card_section.settings.default_desc | default: 'En este apartado debe ir una descripción corta' -%}
+
+<article
+  class="product-card"
+  role="listitem"
+  data-handle="{{ card_product.handle }}"
+  data-price="{{ first_variant.price | divided_by: 100.0 | floor }}"
+  data-available="{{ card_product.available }}"
+>
+
+  {{- '<!-- card: ' | append: card_product.title | append: ' -->' -}}
+
+  {{- '<!-- image -->' -}}
+  <a
+    href="{{ card_product.url }}"
+    class="product-card__image-wrap"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    {%- if card_product.featured_image != blank -%}
+      <img
+        src="{{ card_product.featured_image | img_url: '400x400', crop: 'center' }}"
+        alt="{{ card_product.featured_image.alt | escape | default: card_product.title | escape }}"
+        width="400"
+        height="400"
+        loading="lazy"
+      >
+    {%- else -%}
+      <div class="product-card__image-placeholder">
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </a>
+
+  {{- '<!-- title -->' -}}
+  <div class="product-card__body">
+    <a href="{{ card_product.url }}">
+      <h3 class="product-card__title">{{ card_product.title }}</h3>
+    </a>
+  </div>
+
+  {{- '<!-- description -->' -}}
+  <div class="product-card__desc-wrap">
+    <p class="product-card__desc">
+      {%- if card_product.description != blank -%}
+        {{ card_product.description | strip_html | truncatewords: 15 }}
+      {%- else -%}
+        {{ default_desc }}
+      {%- endif -%}
+    </p>
+  </div>
+
+  {{- '<!-- price + add-to-cart -->' -}}
+  <div class="product-card__footer">
+    <span class="product-card__price">
+      {%- if _show_compare and card_product.compare_at_price > card_product.price -%}
+        <s class="product-card__price--compare">{{ card_product.compare_at_price | money }}</s>
+        {{ card_product.price | money }}
+      {%- else -%}
+        {{ card_product.price | money }}
+      {%- endif -%}
+    </span>
+
+    {%- if first_variant -%}
+      <button
+        class="product-card__btn js-add-to-cart"
+        type="button"
+        data-variant-id="{{ first_variant.id }}"
+        data-product-title="{{ card_product.title | escape }}"
+        aria-label="Agregar {{ card_product.title | escape }} al carrito"
+        {% unless first_variant.available %}disabled aria-disabled="true"{% endunless %}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        {%- if first_variant.available -%}CARRITO{%- else -%}AGOTADO{%- endif -%}
+      </button>
+    {%- endif -%}
+  </div>
+
+</article>

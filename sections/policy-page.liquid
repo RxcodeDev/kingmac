@@ -1,0 +1,323 @@
+{%- comment -%}
+  SECTION: policy-page.liquid
+  Renders a legal/policy page.
+  If the Shopify page has content it renders that; otherwise falls back
+  to the static content blocks below (matched by page.handle).
+{%- endcomment -%}
+
+<div class="policy-page">
+  <div class="policy-page__container">
+
+    <h1 class="policy-page__title">{{ page.title }}</h1>
+
+    {%- if page.content != blank -%}
+      <div class="policy-page__body rte">
+        {{ page.content }}
+      </div>
+    {%- else -%}
+
+      {%- case page.handle -%}
+
+        {%- when 'aviso-de-privacidad' -%}
+          <div class="policy-page__body">
+            <p class="policy-page__subtitle">KINGMAC (marca comercial KINGDEN)</p>
+            <p>En cumplimiento con lo dispuesto por la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (la "Ley"), KINGMAC, titular de la marca comercial KINGDEN, pone a su disposición el presente Aviso de Privacidad.</p>
+
+            <h2>Identidad y domicilio del responsable</h2>
+            <p>KINGMAC, con RFC KIN1701232T1, con domicilio en: PASEO DE LAS FACULTADES 30, COL. COPILCO UNIVERSIDAD, C.P. 04360, COYOACÁN, CIUDAD DE MÉXICO, MÉXICO, es responsable del tratamiento de sus datos personales.</p>
+            <p>Correo para asuntos relacionados con datos personales: <a href="mailto:kingdenmex@gmail.com">kingdenmex@gmail.com</a></p>
+
+            <h2>Datos personales que recabamos</h2>
+            <p>Para el cumplimiento de las finalidades descritas, podremos recabar los siguientes datos personales:</p>
+            <ul>
+              <li>Nombre completo</li>
+              <li>Razón social</li>
+              <li>RFC</li>
+              <li>Domicilio fiscal y/o de envío</li>
+              <li>Teléfono</li>
+              <li>Correo electrónico</li>
+              <li>Información de facturación</li>
+              <li>Información relacionada con pedidos y compras</li>
+              <li>Datos de pago (procesados a través de terceros)</li>
+              <li>Datos de navegación (dirección IP, cookies, comportamiento de navegación)</li>
+            </ul>
+            <p>KINGMAC no recaba datos personales sensibles.</p>
+
+            <h2>Finalidades del tratamiento</h2>
+            <h3>Finalidades primarias:</h3>
+            <ul>
+              <li>Procesar compras realizadas en el sitio web</li>
+              <li>Emitir facturas electrónicas</li>
+              <li>Gestionar envíos dentro del territorio nacional</li>
+              <li>Dar seguimiento a pedidos</li>
+              <li>Atención a clientes</li>
+              <li>Gestión de garantías, devoluciones o aclaraciones</li>
+              <li>Cumplimiento de obligaciones fiscales y legales</li>
+            </ul>
+            <h3>Finalidades secundarias:</h3>
+            <ul>
+              <li>Envío de promociones y ofertas comerciales</li>
+              <li>Email marketing</li>
+              <li>Envío de boletines informativos</li>
+              <li>Publicidad personalizada y remarketing</li>
+            </ul>
+            <p>Si usted no desea que sus datos sean tratados para finalidades secundarias, podrá manifestarlo enviando un correo a <a href="mailto:kingdenmex@gmail.com">kingdenmex@gmail.com</a>.</p>
+
+            <h2>Transferencias de datos</h2>
+            <p>Sus datos personales podrán ser transferidos únicamente para cumplir con las finalidades descritas a:</p>
+            <ul>
+              <li>La plataforma de comercio electrónico Shopify</li>
+              <li>Pasarelas de pago como Openpay y MercadoPago</li>
+              <li>Empresas de mensajería y paquetería</li>
+              <li>Autoridades fiscales o administrativas cuando la ley lo requiera</li>
+            </ul>
+            <p>Los datos financieros son procesados directamente por las pasarelas de pago; KINGMAC no almacena información bancaria completa.</p>
+
+            <h2>Derechos ARCO</h2>
+            <p>Usted tiene derecho a:</p>
+            <ul>
+              <li>Acceder a sus datos personales</li>
+              <li>Rectificarlos si son inexactos</li>
+              <li>Cancelarlos cuando considere que no se requieren</li>
+              <li>Oponerse a su tratamiento</li>
+            </ul>
+            <p>Para ejercer sus derechos ARCO deberá enviar una solicitud al correo <a href="mailto:kingdenmex@gmail.com">kingdenmex@gmail.com</a>, incluyendo:</p>
+            <ul>
+              <li>Nombre completo</li>
+              <li>Descripción clara del derecho que desea ejercer</li>
+              <li>Documento que acredite su identidad</li>
+              <li>Medio para comunicarle la respuesta</li>
+            </ul>
+            <p>La respuesta se dará dentro de los plazos establecidos por la Ley.</p>
+
+            <h2>Uso de cookies y tecnologías de rastreo</h2>
+            <p>El sitio web de KINGDEN utiliza cookies y tecnologías similares para:</p>
+            <ul>
+              <li>Analizar comportamiento de navegación</li>
+              <li>Mejorar experiencia de usuario</li>
+              <li>Implementar campañas de marketing digital</li>
+            </ul>
+            <p>Podrán utilizarse herramientas como: Google Analytics y Meta Pixel.</p>
+            <p>El usuario puede deshabilitar las cookies desde la configuración de su navegador.</p>
+
+            <h2>Revocación del consentimiento</h2>
+            <p>Usted puede revocar el consentimiento otorgado para el tratamiento de sus datos personales enviando solicitud al correo <a href="mailto:kingdenmex@gmail.com">kingdenmex@gmail.com</a>.</p>
+
+            <h2>Limitación del uso o divulgación</h2>
+            <p>Puede solicitar su inscripción en el listado de exclusión para no recibir comunicaciones comerciales enviando correo al responsable.</p>
+
+            <h2>Cambios al aviso de privacidad</h2>
+            <p>KINGMAC se reserva el derecho de modificar el presente Aviso de Privacidad para cumplir con actualizaciones legales o cambios en el modelo de negocio. Las modificaciones estarán disponibles en el sitio web oficial.</p>
+          </div>
+
+        {%- when 'politica-de-devolucion' -%}
+          <div class="policy-page__body">
+            <p class="policy-page__subtitle">KINGMAC (marca comercial KINGDEN)</p>
+
+            <h2>Alcance</h2>
+            <p>La presente Política de Devolución aplica a todas las compras realizadas a través del sitio web oficial de KINGDEN dentro del territorio de los Estados Unidos Mexicanos.</p>
+
+            <h2>Plazo para solicitar devolución</h2>
+            <p>El cliente podrá solicitar devolución dentro de los <strong>5 días naturales</strong> posteriores a la recepción del producto. Después de este plazo no se aceptarán devoluciones, salvo defectos de fabricación.</p>
+
+            <h2>Condiciones para aceptar devoluciones</h2>
+            <p>Para que una devolución sea procedente, el producto deberá:</p>
+            <ul>
+              <li>Estar sin uso</li>
+              <li>Conservar empaque original</li>
+              <li>Incluir accesorios, manuales y etiquetas</li>
+              <li>No presentar daños por mal uso</li>
+              <li>No tratarse de producto de uso clínico abierto o material estéril violado</li>
+            </ul>
+            <p>Por razones de higiene y seguridad sanitaria, no se aceptan devoluciones de productos desechables, materiales dentales abiertos o productos estériles cuyo empaque haya sido alterado, salvo defecto de fabricación comprobable.</p>
+
+            <h2>Productos no elegibles para devolución</h2>
+            <ul>
+              <li>Productos personalizados</li>
+              <li>Equipos instalados o manipulados</li>
+              <li>Materiales de consumo abiertos</li>
+              <li>Productos en promoción o liquidación</li>
+            </ul>
+
+            <h2>Procedimiento</h2>
+            <p>Para iniciar una devolución, envíe un correo a <a href="mailto:kingdenmex@gmail.com">kingdenmex@gmail.com</a> indicando:</p>
+            <ul>
+              <li>Número de pedido</li>
+              <li>Motivo de devolución</li>
+              <li>Evidencia fotográfica (si aplica)</li>
+            </ul>
+            <p>Una vez autorizada, se indicarán instrucciones de envío.</p>
+
+            <h2>Costos de envío por devolución</h2>
+            <ul>
+              <li><strong>Si el motivo es defecto o error de envío:</strong> KINGMAC cubrirá el costo de envío.</li>
+              <li><strong>Si el motivo es decisión del cliente:</strong> el cliente cubrirá el costo de envío.</li>
+            </ul>
+
+            <h2>Reembolsos</h2>
+            <p>Los reembolsos se realizarán al mismo método de pago utilizado originalmente (Openpay o Mercado Pago). El tiempo de procesamiento puede variar según la institución bancaria (5 a 15 días hábiles).</p>
+          </div>
+
+        {%- when 'politica-de-entrega' -%}
+          <div class="policy-page__body">
+            <h2>Cobertura</h2>
+            <p>Realizamos envíos únicamente dentro de la República Mexicana.</p>
+
+            <h2>Tiempos de procesamiento</h2>
+            <p>Los pedidos se procesan en un plazo de <strong>1 a 3 días hábiles</strong> después de confirmarse el pago.</p>
+
+            <h2>Tiempos estimados de entrega</h2>
+            <p>Los tiempos de entrega dependerán de la paquetería y destino:</p>
+            <ul>
+              <li><strong>CDMX y Área Metropolitana:</strong> 1 a 3 días hábiles</li>
+              <li><strong>Interior de la República:</strong> 2 a 6 días hábiles</li>
+            </ul>
+            <p>Estos tiempos son estimados y pueden variar por causas ajenas a KINGMAC.</p>
+
+            <h2>Confirmación y seguimiento</h2>
+            <p>Una vez enviado el pedido, el cliente recibirá un número de guía para rastreo.</p>
+
+            <h2>Responsabilidad de entrega</h2>
+            <p>La responsabilidad de KINGMAC concluye al momento de entregar el paquete a la empresa de mensajería. En caso de retraso o incidencia logística, apoyaremos al cliente en la gestión con la paquetería.</p>
+
+            <h2>Dirección incorrecta</h2>
+            <p>Si el cliente proporciona datos erróneos de envío, será responsable de los costos adicionales generados.</p>
+          </div>
+
+        {%- when 'politica-de-compra' -%}
+          <div class="policy-page__body">
+            <p class="policy-page__subtitle">KINGMAC (KINGDEN)</p>
+
+            <h2>1. Proceso de compra</h2>
+            <p>Al realizar una compra en el sitio web, el cliente declara que:</p>
+            <ul>
+              <li>Es mayor de edad</li>
+              <li>Proporciona información veraz</li>
+              <li>Tiene capacidad legal para contratar</li>
+            </ul>
+
+            <h2>Confirmación de pedido</h2>
+            <p>El pedido se considerará confirmado una vez aprobado el pago por la pasarela correspondiente (Openpay o Mercado Pago).</p>
+            <p>KINGMAC se reserva el derecho de cancelar pedidos en caso de:</p>
+            <ul>
+              <li>Error evidente en precio</li>
+              <li>Problemas de inventario</li>
+              <li>Sospecha de fraude</li>
+              <li>Información falsa o incompleta</li>
+            </ul>
+
+            <h2>Precios</h2>
+            <p>Todos los precios están expresados en pesos mexicanos (MXN) e incluyen IVA, salvo indicación expresa. Los precios pueden cambiar sin previo aviso.</p>
+
+            <h2>Facturación</h2>
+            <p>El cliente deberá solicitar factura al momento de la compra proporcionando datos fiscales completos. No se emitirán facturas fuera del mes de la compra.</p>
+
+            <h2>Disponibilidad</h2>
+            <p>Todos los productos están sujetos a disponibilidad. En caso de falta de inventario posterior a la compra, se ofrecerá:</p>
+            <ul>
+              <li>Reembolso total</li>
+              <li>Sustitución por producto equivalente</li>
+            </ul>
+
+            <h2>Limitación de responsabilidad</h2>
+            <p>KINGMAC no será responsable por:</p>
+            <ul>
+              <li>Uso indebido de productos</li>
+              <li>Instalaciones incorrectas</li>
+              <li>Daños derivados de mala manipulación</li>
+            </ul>
+          </div>
+
+        {%- else -%}
+          <div class="policy-page__body">
+            {{ page.content }}
+          </div>
+
+      {%- endcase -%}
+
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+.policy-page {
+  padding: var(--spacing-xl) var(--spacing-md);
+  min-height: 60vh;
+}
+.policy-page__container {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.policy-page__title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 4px solid var(--color-accent);
+}
+.policy-page__subtitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-xl);
+}
+.policy-page__body {
+  color: var(--color-text);
+  line-height: 1.8;
+  font-size: 0.97rem;
+}
+.policy-page__body h2 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-sm);
+  padding-left: var(--spacing-sm);
+  border-left: 4px solid var(--color-accent);
+}
+.policy-page__body h3 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+.policy-page__body p {
+  margin-bottom: var(--spacing-md);
+}
+.policy-page__body ul {
+  margin: var(--spacing-sm) 0 var(--spacing-md) var(--spacing-xl);
+  list-style: disc;
+}
+.policy-page__body ul li {
+  margin-bottom: 6px;
+}
+.policy-page__body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+.policy-page__body a:hover {
+  color: var(--color-accent-dark);
+}
+.policy-page__body strong {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+</style>
+
+{% schema %}
+{
+  "name": "Página de política",
+  "settings": []
+}
+{% endschema %}

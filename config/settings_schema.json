@@ -1,0 +1,168 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Kingden Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Kingden",
+    "theme_documentation_url": "https://kingden.com",
+    "theme_support_url": "https://kingden.com"
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Color primario (botones, UI)",
+        "default": "#1B2A4A"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Color acento (nav, badges, highlights)",
+        "default": "#E87722"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Color secundario (títulos de producto)",
+        "default": "#12448F"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Fondo general",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Color de texto",
+        "default": "#333333"
+      },
+      {
+        "type": "color",
+        "id": "color_topbar",
+        "label": "Fondo barra superior",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_bg",
+        "label": "Fondo del footer",
+        "default": "#1B3A6B"
+      }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      {
+        "type": "select",
+        "id": "font_heading",
+        "label": "Fuente para títulos",
+        "options": [
+          { "value": "Oswald", "label": "Oswald" },
+          { "value": "Barlow Condensed", "label": "Barlow Condensed" },
+          { "value": "Roboto Condensed", "label": "Roboto Condensed" }
+        ],
+        "default": "Barlow Condensed"
+      },
+      {
+        "type": "select",
+        "id": "font_body",
+        "label": "Fuente para cuerpo",
+        "options": [
+          { "value": "Roboto", "label": "Roboto" },
+          { "value": "Open Sans", "label": "Open Sans" },
+          { "value": "Lato", "label": "Lato" }
+        ],
+        "default": "Roboto"
+      }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      }
+    ]
+  },
+  {
+    "name": "Favicon y marca",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon (32x32 px recomendado)"
+      }
+    ]
+  },
+  {
+    "name": "Contacto flotante",
+    "settings": [
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "Número de WhatsApp",
+        "info": "Incluye código de país, sin espacios ni símbolos. Ej: 5215512345678",
+        "placeholder": "5215512345678"
+      },
+      {
+        "type": "text",
+        "id": "contact_phone",
+        "label": "Teléfono de contacto",
+        "info": "Se muestra como etiqueta en el botón y se usa para el enlace tel:",
+        "placeholder": "55-5555-5555"
+      }
+    ]
+  },
+  {
+    "name": "Carrito — textos",
+    "settings": [
+      {
+        "type": "text",
+        "id": "cart_title",
+        "label": "Título del carrito",
+        "default": "Tu Carrito"
+      },
+      {
+        "type": "text",
+        "id": "cart_empty_text",
+        "label": "Texto cuando el carrito está vacío",
+        "default": "Tu carrito está vacío."
+      },
+      {
+        "type": "text",
+        "id": "cart_total_label",
+        "label": "Etiqueta de total",
+        "default": "Total:"
+      },
+      {
+        "type": "text",
+        "id": "cart_view_label",
+        "label": "Texto botón \"Ver Carrito\"",
+        "default": "Ver Carrito"
+      },
+      {
+        "type": "text",
+        "id": "cart_checkout_label",
+        "label": "Texto botón \"Proceder al Pago\"",
+        "default": "Proceder al Pago"
+      }
+    ]
+  }
+]

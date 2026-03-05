@@ -1,0 +1,172 @@
+{
+  "sections": {
+    "hero_slideshow": {
+      "type": "hero-slideshow",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "asset_image": "bane_001.png",
+            "title": "Bienvenido a Kingden",
+            "subtitle": "Equipos y materiales dentales de alta calidad",
+            "button_label": "Ver Catálogo",
+            "button_url": "/collections/all"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "asset_image": "bane_002.png",
+            "title": "Unidades Dentales",
+            "subtitle": "Calidad profesional, financiamiento disponible y entrega rápida.",
+            "button_label": "Ver Modelos",
+            "button_url": "/collections/unidades"
+          }
+        }
+      },
+      "block_order": ["slide_1", "slide_2"],
+      "settings": {
+        "autoplay_speed": 5
+      }
+    },
+    "productos_mas_vendidos": {
+      "type": "product-grid",
+      "settings": {
+        "title": "LO MÁS VENDIDO",
+        "products_to_show": 5
+      }
+    },
+    "featured_banners": {
+      "type": "featured-banner",
+      "blocks": {
+        "banner_1": {
+          "type": "banner",
+          "settings": {
+            "text": "RESALTAR OFERTA",
+            "bg_color": "#000000",
+            "text_color": "#FFFFFF"
+          }
+        },
+        "banner_2": {
+          "type": "banner",
+          "settings": {
+            "text": "RESALTAR OFERTA",
+            "bg_color": "#000000",
+            "text_color": "#FFFFFF"
+          }
+        }
+      },
+      "block_order": ["banner_1", "banner_2"],
+      "settings": {}
+    },
+    "envios_section": {
+      "type": "shipping-section",
+      "settings": {
+        "banner_text": "ENVIOS A TODO MEXICO",
+        "banner_bg": "#000000",
+        "banner_text_color": "#FFFFFF",
+        "products_to_show": 5
+      }
+    },
+    "content_highlight": {
+      "type": "content-highlight",
+      "settings": {
+        "product_handle": "kin-18n",
+        "title": "Destacar contenido",
+        "body_text": "Información de la oferta o texto de valor aquí",
+        "gradient_start": "#1B2A4A",
+        "gradient_mid": "#2e4a8a",
+        "gradient_end": "#E87722"
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "text_1": {
+          "type": "text_item",
+          "settings": {
+            "text": "CALIDAD Y GRANDES OFERTAS",
+            "text_color": "#FFFFFF"
+          }
+        }
+      },
+      "block_order": ["text_1"],
+      "settings": {
+        "default_text": "CALIDAD Y GRANDES OFERTAS",
+        "bg_color": "#000000",
+        "speed": "normal"
+      }
+    },
+    "logistics_notice": {
+      "type": "logistics-notice",
+      "settings": {
+        "heading": "ESTIMADO CLIENTE",
+        "body_text": "LA LOGÍSTICA DE ENVÍOS ES SUPERVISADA POR EL PROVEEDOR QUE ELIJA AL REALIZAR SUS COMPRAS, EN LA SECCIÓN DE ENVÍOS",
+        "thanks_text": "AGRADECEMOS SU PREFERENCIA"
+      }
+    },
+    "promo_cards": {
+      "type": "promo-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "title": "ZONA DE REMATES",
+            "cta": "COMPRAR",
+            "bg_color": "#1B2A4A",
+            "title_color": "#FFFFFF"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "title": "LO MÁS VENDIDO",
+            "cta": "COMPRAR",
+            "bg_color": "#1B2A4A",
+            "title_color": "#FFFFFF"
+          }
+        }
+      },
+      "block_order": ["card_1", "card_2"],
+      "settings": {}
+    },
+    "catalogs": {
+      "type": "catalogs",
+      "blocks": {
+        "catalog_1": {
+          "type": "catalog",
+          "settings": { "title": "Equipos 2026", "pdf_filename": "cat-equipos.pdf" }
+        },
+        "catalog_2": {
+          "type": "catalog",
+          "settings": { "title": "Materiales 2026", "pdf_filename": "cat-materiales.pdf" }
+        },
+        "catalog_3": {
+          "type": "catalog",
+          "settings": { "title": "Ortodoncia 2026", "pdf_filename": "cat-ortodoncia.pdf" }
+        },
+        "catalog_4": {
+          "type": "catalog",
+          "settings": { "title": "Laboratorio 2026", "pdf_filename": "cat-laboratorio.pdf" }
+        }
+      },
+      "block_order": ["catalog_1", "catalog_2", "catalog_3", "catalog_4"],
+      "settings": {
+        "cta_text": "DESCÁRGALOS YA",
+        "cta_color": "#FFFFFF",
+        "bg_color": "#000000"
+      }
+    }
+  },
+  "order": [
+    "hero_slideshow",
+    "productos_mas_vendidos",
+    "featured_banners",
+    "envios_section",
+    "marquee",
+    "content_highlight",
+    "logistics_notice",
+    "promo_cards",
+    "catalogs"
+  ]
+}

@@ -1,0 +1,225 @@
+{%- comment -%}
+  Nav fallback items — shown when no nav blocks are configured in the customizer.
+  Defined once here to avoid duplication between desktop and mobile navs.
+{%- endcomment -%}
+{%- assign nav_fallback_items = 'LABORATORIO,EQUIPO,INSTRUMENTAL,PRACTICA,ORTODONCIA,UNIDADES,MAYOREO' | split: ',' -%}
+
+<header class="site-header" role="banner">
+
+  <!-- ══ CAPA 2: Header principal — fondo negro ══ -->
+  <div class="site-header__top">
+
+    <!-- Logo: usa white.png por defecto -->
+    <div class="site-header__logo">
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }} inicio">
+        {%- render 'logo',
+          logo_image:   section.settings.logo,
+          logo_height:  46,
+          logo_loading: 'eager'
+        -%}
+      </a>
+    </div>
+
+    <!-- Barra de búsqueda central: fondo blanco, bordes redondeados -->
+    <div class="site-header__search js-search-wrap">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form" autocomplete="off">
+        <input type="hidden" name="type" value="product">
+        <input
+          class="search-form__input js-search-input"
+          type="search"
+          name="q"
+          placeholder="{{ section.settings.search_placeholder | default: 'Buscar productos...' }}"
+          aria-label="Buscar productos"
+          autocomplete="off"
+          spellcheck="false"
+          value="{{ search.terms | escape }}"
+          role="combobox"
+          aria-expanded="false"
+          aria-controls="search-suggest"
+          aria-autocomplete="list"
+        >
+        <button type="submit" class="search-form__btn" aria-label="Buscar">
+          {%- render 'icon', icon_name: 'search', icon_size: 18 -%}
+        </button>
+      </form>
+      <ul id="search-suggest" class="search-suggest js-search-suggest" role="listbox" hidden></ul>
+    </div>
+
+    <!-- Carrito + búsqueda toggle (mobile) + hamburger -->
+    <div class="site-header__actions">
+      <button class="search-toggle js-search-toggle" aria-label="Buscar" type="button">
+        {%- render 'icon', icon_name: 'search', icon_size: 22 -%}
+      </button>
+
+      <button class="cart-btn js-cart-open" aria-label="Abrir carrito" type="button">
+        {%- render 'icon', icon_name: 'cart', icon_size: 26 -%}
+        <span class="cart-btn__count" aria-live="polite" aria-atomic="true">0</span>
+      </button>
+
+      <button
+        class="hamburger-btn"
+        id="hamburger-btn"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        type="button"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+  </div><!-- /.site-header__top -->
+
+  <!-- Barra de búsqueda colapsable (visible sólo en móvil cuando se activa) -->
+  <div class="site-header__search-bar js-search-bar" aria-hidden="true">
+    <div class="js-search-wrap site-header__search-bar-inner">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form search-form--bar" autocomplete="off">
+        <input type="hidden" name="type" value="product">
+        <input
+          class="search-form__input js-search-bar-input"
+          type="search"
+          name="q"
+          placeholder="{{ section.settings.search_placeholder | default: 'Buscar productos...' }}"
+          aria-label="Buscar productos"
+          autocomplete="off"
+          spellcheck="false"
+          value="{{ search.terms | escape }}"
+          role="combobox"
+          aria-expanded="false"
+          aria-controls="search-bar-suggest"
+          aria-autocomplete="list"
+        >
+        <button type="submit" class="search-form__btn" aria-label="Buscar">
+          {%- render 'icon', icon_name: 'search', icon_size: 18 -%}
+        </button>
+        <button type="button" class="search-bar__close js-search-toggle" aria-label="Cerrar búsqueda">
+          {%- render 'icon', icon_name: 'close', icon_size: 18 -%}
+        </button>
+      </form>
+      <ul id="search-bar-suggest" class="search-suggest js-search-suggest" role="listbox" hidden></ul>
+    </div>
+  </div>
+
+  <!-- ══ CAPA 3: Barra de navegación — fondo naranja ══ -->
+  <nav class="site-nav" aria-label="Navegación principal">
+    <div class="site-nav__inner">
+      <ul class="site-nav__list" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'nav_item' -%}
+            {%- assign nav_href = block.settings.link_url -%}
+            {%- if nav_href == blank -%}
+              {%- assign nav_href = '/collections/' | append: block.settings.label | downcase | replace: ' ', '-' -%}
+            {%- endif -%}
+            {%- assign nav_handle = nav_href | split: '/' | last -%}
+            {%- assign is_active = false -%}
+            {%- if request.page_type == 'collection' and collection.handle == nav_handle -%}
+              {%- assign is_active = true -%}
+            {%- endif -%}
+            <li class="site-nav__item{% if is_active %} active{% endif %}" {{ block.shopify_attributes }}>
+              <a class="site-nav__link" href="{{ nav_href }}">
+                {{ block.settings.label }}
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- comment -%} Fallback si no hay bloques configurados {%- endcomment -%}
+        {%- if section.blocks.size == 0 -%}
+          {%- for item in nav_fallback_items -%}
+            {%- assign item_handle = item | downcase -%}
+            {%- assign fallback_active = false -%}
+            {%- if request.page_type == 'collection' and collection.handle == item_handle -%}
+              {%- assign fallback_active = true -%}
+            {%- endif -%}
+            <li class="site-nav__item{% if fallback_active %} active{% endif %}">
+              <a class="site-nav__link" href="/collections/{{ item_handle }}">{{ item }}</a>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Menú móvil -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Menú móvil">
+    <ul class="mobile-nav__list" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'nav_item' -%}
+          {%- assign mob_href = block.settings.link_url -%}
+          {%- if mob_href == blank -%}
+            {%- assign mob_href = '/collections/' | append: block.settings.label | downcase | replace: ' ', '-' -%}
+          {%- endif -%}
+          <li>
+            <a class="mobile-nav__link" href="{{ mob_href }}">
+              {{ block.settings.label }}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if section.blocks.size == 0 -%}
+        {%- for item in nav_fallback_items -%}
+          <li><a class="mobile-nav__link" href="/collections/{{ item | downcase }}">{{ item }}</a></li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+  </nav>
+
+</header>
+
+{% schema %}
+{
+  "name": "Encabezado",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Placeholder de búsqueda",
+      "default": "Buscar productos..."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_item",
+      "name": "Elemento de menú",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Categoría"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Enlace"
+        },
+        {
+          "type": "checkbox",
+          "id": "active",
+          "label": "Marcado como activo",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "nav_item", "settings": { "label": "LABORATORIO", "active": true } },
+      { "type": "nav_item", "settings": { "label": "EQUIPO" } },
+      { "type": "nav_item", "settings": { "label": "INSTRUMENTAL" } },
+      { "type": "nav_item", "settings": { "label": "PRACTICA" } },
+      { "type": "nav_item", "settings": { "label": "ORTODONCIA" } },
+      { "type": "nav_item", "settings": { "label": "UNIDADES" } },
+      { "type": "nav_item", "settings": { "label": "MAYOREO" } }
+    ]
+  }
+}
+{% endschema %}

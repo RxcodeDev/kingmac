@@ -1,0 +1,102 @@
+{%- assign speed_class = '' -%}
+{%- if section.settings.speed == 'slow' -%}
+  {%- assign speed_class = 'marquee-track--slow' -%}
+{%- elsif section.settings.speed == 'fast' -%}
+  {%- assign speed_class = 'marquee-track--fast' -%}
+{%- endif -%}
+
+<section
+  class="marquee-section"
+  style="background-color: {{ section.settings.bg_color }};"
+  aria-label="Marquee"
+  role="marquee"
+>
+  <div class="marquee-wrapper">
+    {%- comment -%}
+      Duplicate the track content so the scroll appears seamless.
+      We duplicate it twice (both inside the track) for a perfect loop.
+    {%- endcomment -%}
+    <div class="marquee-track {{ speed_class }}" aria-hidden="true">
+      {%- for i in (1..2) -%}
+        {%- for block in section.blocks -%}
+          <span class="marquee-item" style="color: {{ block.settings.text_color | default: '#ffffff' }};"
+            {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+          </span>
+        {%- else -%}
+          <span class="marquee-item">
+            {{ section.settings.default_text }}
+          </span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Screen-reader-only version for accessibility {%- endcomment -%}
+  <p class="sr-only">
+    {%- for block in section.blocks -%}{{ block.settings.text }}{%- unless forloop.last %} — {%- endunless -%}{%- endfor -%}
+    {%- if section.blocks.size == 0 -%}{{ section.settings.default_text }}{%- endif -%}
+  </p>
+</section>
+
+{% schema %}
+{
+  "name": "Ticker / Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "default_text",
+      "label": "Texto por defecto (si no hay bloques)",
+      "default": "CALIDAD Y GRANDES OFERTAS"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "speed",
+      "label": "Velocidad",
+      "options": [
+        { "value": "slow",   "label": "Lenta"  },
+        { "value": "normal", "label": "Normal" },
+        { "value": "fast",   "label": "Rápida" }
+      ],
+      "default": "normal"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_item",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "SLOGAN O FRASE A DESTACAR"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color del texto",
+          "default": "#FFFFFF"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ticker / Marquee",
+      "blocks": [
+        {
+          "type": "text_item",
+          "settings": { "text": "CALIDAD Y GRANDES OFERTAS" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

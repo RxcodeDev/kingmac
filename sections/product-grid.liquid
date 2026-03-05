@@ -1,0 +1,88 @@
+{%- assign collection = collections[section.settings.collection] -%}
+{%- assign _use_random = false -%}
+{%- if collection != blank and collection.products_count > 0 -%}
+  {%- assign _grid_products = collection.products -%}
+{%- elsif collections.all.products_count > 0 -%}
+  {%- assign _grid_products = collections.all.products -%}
+  {%- assign _use_random = true -%}
+{%- endif -%}
+
+<section class="product-grid-section" aria-labelledby="product-grid-title-{{ section.id }}">
+  <div class="container">
+
+    {%- if section.settings.title != blank -%}
+      <h2 class="section-title" id="product-grid-title-{{ section.id }}">
+        {{ section.settings.title }}
+      </h2>
+    {%- endif -%}
+
+    <div class="product-grid{% if _use_random %} js-random-grid{% endif %}"
+         {% if _use_random %}data-random-count="{{ section.settings.products_to_show }}"{% endif %}
+         role="list">
+
+      {%- if _grid_products != blank -%}
+
+        {%- for product in _grid_products limit: 50 -%}
+          {%- if product.featured_image != blank -%}
+            {%- render 'product-card',
+              card_product: product,
+              card_section:  section,
+              show_compare:  true
+            -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+      {%- else -%}
+
+        {%- comment -%} Placeholder cards when no products exist {%- endcomment -%}
+        {%- for i in (1..5) -%}
+          {%- render 'product-card-placeholder', placeholder_index: i -%}
+        {%- endfor -%}
+
+      {%- endif -%}
+    </div><!-- /.product-grid -->
+
+  </div><!-- /.container -->
+</section>
+
+{% schema %}
+{
+  "name": "Grilla de productos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título de la sección",
+      "default": "LO MÁS VENDIDO"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección a mostrar"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Cantidad de productos",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "default_desc",
+      "label": "Descripción por defecto",
+      "default": "En este apartado debe ir una descripción corta"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grilla de productos",
+      "settings": {
+        "title": "LO MÁS VENDIDO"
+      }
+    }
+  ]
+}
+{% endschema %}

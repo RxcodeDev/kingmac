@@ -1,0 +1,24 @@
+{
+  "current": {
+    "color_primary":    "#1B2A4A",
+    "color_accent":     "#E87722",
+    "color_secondary":  "#12448F",
+    "color_background": "#FFFFFF",
+    "color_text":       "#333333",
+    "color_topbar":     "#000000",
+    "color_footer_bg":  "#E87722",
+    "font_heading": "Barlow Condensed",
+    "font_body":    "Roboto",
+    "social_tiktok":    "https://www.tiktok.com/@kingdenmx?is_from_webapp=1&sender_device=pc",
+    "social_instagram": "https://www.instagram.com/kingdenmx/",
+    "social_facebook":  "https://www.facebook.com/share/1CJYh6FT2a/?mibextid=wwXIfr",
+    "whatsapp_number":   "525534344508",
+    "contact_phone":     "55 5659 5681",
+    "cart_title":           "Tu Carrito",
+    "cart_empty_text":      "Tu carrito está vacío.",
+    "cart_total_label":     "Total:",
+    "cart_view_label":      "Ver Carrito",
+    "cart_checkout_label":  "Proceder al Pago"
+  },
+  "presets": {}
+}

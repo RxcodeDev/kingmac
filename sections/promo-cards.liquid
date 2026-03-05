@@ -1,0 +1,105 @@
+<section class="promo-cards">
+  <div class="promo-cards__inner">
+    {%- for block in section.blocks -%}
+      <a
+        href="{{ block.settings.url | default: '#' }}"
+        class="promo-card"
+        style="background-color: {{ block.settings.bg_color | default: '#000000' }};"
+        {{ block.shopify_attributes }}
+      >
+        <div class="promo-card__body">
+          <p class="promo-card__title" style="color: {{ block.settings.title_color | default: '#FFFFFF' }};">
+            {{ block.settings.title | default: 'TÍTULO' }}
+          </p>
+          <span class="promo-card__cta" style="color: {{ block.settings.title_color | default: '#FFFFFF' }};">
+            {{ block.settings.cta | default: 'COMPRAR' }}
+          </span>
+        </div>
+      </a>
+    {%- else -%}
+      <a href="#" class="promo-card" style="background-color: #000000;">
+        <div class="promo-card__body">
+          <p class="promo-card__title">ZONA DE REMATES</p>
+          <span class="promo-card__cta">COMPRAR</span>
+        </div>
+      </a>
+      <a href="#" class="promo-card" style="background-color: #000000;">
+        <div class="promo-card__body">
+          <p class="promo-card__title">LO MÁS VENDIDO</p>
+          <span class="promo-card__cta">COMPRAR</span>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tarjetas promo",
+  "limit": 1,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Tarjeta",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "ZONA DE REMATES"
+        },
+        {
+          "type": "text",
+          "id": "cta",
+          "label": "Texto CTA",
+          "default": "COMPRAR"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Enlace"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Color de fondo",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color del texto",
+          "default": "#000000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tarjetas promo",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "ZONA DE REMATES",
+            "cta": "COMPRAR",
+            "bg_color": "#000000",
+            "title_color": "#000000"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "LO MÁS VENDIDO",
+            "cta": "COMPRAR",
+            "bg_color": "#000000",
+            "title_color": "#000000"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

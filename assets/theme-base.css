@@ -1,0 +1,308 @@
+/* =============================================================================
+   KINGDEN — BASE: Reset · Variables · Utilities · Buttons
+   ============================================================================= */
+
+/* ─── CSS VARIABLES ──────────────────────────────────────────────────────── */
+:root {
+  /* ── Brand Colors ───────────────────────────────────────────────────────── */
+  /*
+   * NOTE: --color-primary, --color-accent, --color-background, --color-text
+   * are declared here as static fallbacks. At runtime theme.liquid overrides
+   * them via <style>:root{} from the Theme Customizer (settings_schema.json).
+   * Keep these defaults in sync with settings_data.json "current" values.
+   */
+  --color-primary:       #1B2A4A;   /* Navy — buttons, cart, UI chrome (customizer)  */
+  --color-primary-dark:  #14203a;   /* Hover/active for primary                      */
+  --color-secondary:     #12448F;   /* Deep blue — headings, product titles           */
+  --color-neutral:       #D5D5DB;   /* Light gray — borders, card backgrounds        */
+  --color-black:         #000000;   /* Pure black — site header, marquee              */
+  --color-accent:        #E87722;   /* Warm orange — nav bar, badges, highlights      */
+  --color-accent-dark:   #d06b1a;   /* Hover state for accent                         */
+  --color-background:    #FFFFFF;   /* Page / card background                         */
+  --color-text:          #333333;   /* Default body text                              */
+  --color-gray:          #6B7280;   /* Secondary text, muted icons                    */
+  --color-light-gray:    #F5F5F5;   /* Subtle section backgrounds                     */
+
+  /* ── Semantic UI Tokens ─────────────────────────────────────────────────── */
+  --color-header-bg:       var(--color-black);     /* Site header background        */
+  --color-nav-bg:          var(--color-accent);    /* Primary nav bar background    */
+  --color-announcement-bg: #4a4a4a;               /* Announcement bar background   */
+  --color-footer-bg:       var(--color-accent);    /* Footer background             */
+  --color-search-focus:    var(--color-accent);    /* Search field focus ring       */
+  --color-highlight-bg:    #dceeff;               /* content-highlight section bg  */
+  --color-input-icon:      #666666;               /* Search/form icon default      */
+  --color-input-placeholder: #999999;             /* Input placeholder text        */
+  --color-text-muted:         var(--color-gray);   /* Muted / secondary body text   */
+
+  /* ── Typography ─────────────────────────────────────────────────────────── */
+  --font-primary:          'Neue Plak', sans-serif;   /* Single brand typeface  */
+  --font-heading:          var(--font-primary);        /* Alias — backward compat */
+  --font-body:             var(--font-primary);        /* Alias — backward compat */
+  --font-weight-black:     900;   /* Neue Plak Black  → headings, emphasis     */
+  --font-weight-bold:      700;   /* Neue Plak Bold   → buttons, labels        */
+  --font-weight-regular:   400;   /* Neue Plak Regular → standard text         */
+  --font-weight-light:     300;   /* Neue Plak Light  → body text              */
+  --font-weight-ultralight:200;   /* Neue Plak ULight → subtle/secondary text  */
+
+  /* ── Layout & Spacing ───────────────────────────────────────────────────── */
+  --container-max:  1280px;
+  --spacing-xs:     4px;
+  --spacing-sm:     8px;
+  --spacing-md:     16px;
+  --spacing-lg:     24px;
+  --spacing-xl:     40px;
+  --spacing-xxl:    64px;
+  --border-radius:     4px;
+  --border-radius-md:  8px;
+  --border-radius-lg:  16px;
+
+  /* ── Effects ────────────────────────────────────────────────────────────── */
+  --shadow:       0 4px 20px rgba(0, 0, 0, 0.12);
+  --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.20);
+  --transition:   0.25s ease;
+}
+
+/* ─── CSS RESET ──────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-light);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-black);
+}
+
+p, .body-text {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-light);
+}
+
+small, caption, .secondary {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-ultralight);
+}
+
+strong, .highlight {
+  font-weight: var(--font-weight-black);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol { list-style: none; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ─── UTILITIES ──────────────────────────────────────────────────────────── */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-center    { text-align: center; }
+.text-uppercase { text-transform: uppercase; }
+
+.section-title {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  font-weight: var(--font-weight-black);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-black);
+  margin: 0;
+  padding: 0 0 var(--spacing-sm);
+  letter-spacing: 0.04em;
+  width: 100%;
+  display: block;
+}
+
+/* ─── BUTTONS ────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: 10px 22px;
+  border-radius: var(--border-radius);
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+}
+.btn--primary:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
+
+.btn--accent {
+  background: var(--color-accent);
+  color: var(--color-background);
+  border-color: var(--color-accent);
+}
+.btn--accent:hover {
+  background: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+}
+
+.btn--outline-accent {
+  background: var(--color-background);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.btn--outline-accent:hover {
+  background: var(--color-accent);
+  color: var(--color-background);
+}
+
+.btn--full { width: 100%; }
+
+/* =============================================================================
+   FLOATING CONTACT BUTTONS (WhatsApp + Teléfono)
+   ============================================================================= */
+
+.float-contact {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 9999;
+}
+
+.float-contact__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.28);
+  transition: width 0.3s ease, border-radius 0.3s ease,
+              padding 0.3s ease, transform 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+.float-contact__btn svg {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+}
+
+.float-contact__label {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+  margin-left: 0;
+  transition: max-width 0.3s ease, margin-left 0.3s ease;
+}
+
+.float-contact__btn:hover {
+  width: auto;
+  border-radius: 29px;
+  padding: 0 20px 0 16px;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.32);
+}
+
+.float-contact__btn:hover .float-contact__label {
+  max-width: 130px;
+  margin-left: 9px;
+}
+
+/* WhatsApp — verde */
+.float-contact__btn--whatsapp {
+  background: #25D366;
+  animation: float-pulse-wa 2.8s ease-out infinite;
+}
+.float-contact__btn--whatsapp:hover {
+  background: #1ebe5d;
+  animation: none;
+}
+
+/* Teléfono — color primario del tema */
+.float-contact__btn--phone {
+  background: var(--color-primary);
+  animation: float-pulse-ph 2.8s ease-out 1.4s infinite;
+}
+.float-contact__btn--phone:hover {
+  background: var(--color-primary-dark);
+  animation: none;
+}
+
+@keyframes float-pulse-wa {
+  0%   { box-shadow: 0 0 0 0   rgba(37,211,102,0.55); }
+  70%  { box-shadow: 0 0 0 14px rgba(37,211,102,0);   }
+  100% { box-shadow: 0 0 0 0   rgba(37,211,102,0);   }
+}
+
+@keyframes float-pulse-ph {
+  0%   { box-shadow: 0 0 0 0   rgba(27,42,74,0.5);  }
+  70%  { box-shadow: 0 0 0 14px rgba(27,42,74,0);   }
+  100% { box-shadow: 0 0 0 0   rgba(27,42,74,0);   }
+}
+
+/* ─── REVEAL ANIMATIONS ──────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

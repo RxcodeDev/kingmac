@@ -1,0 +1,102 @@
+<div class="announcement-bar" role="banner" aria-label="Información de la tienda">
+  <div class="announcement-bar__inner js-announcement-rotator">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+
+        {%- when 'icon_text' -%}
+          {%- if block.settings.link_url != blank -%}
+            <a class="announcement-bar__item announcement-bar__item--clickable" href="{{ block.settings.link_url }}" {{ block.shopify_attributes }}>
+              {%- render 'icon', icon_name: block.settings.icon, icon_size: 18 -%}
+              {{ block.settings.text }}
+            </a>
+          {%- else -%}
+            <span class="announcement-bar__item" {{ block.shopify_attributes }}>
+              {%- render 'icon', icon_name: block.settings.icon, icon_size: 18 -%}
+              {{ block.settings.text }}
+            </span>
+          {%- endif -%}
+
+        {%- when 'link' -%}
+          <span class="announcement-bar__item announcement-bar__item--link" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link_url | default: routes.account_login_url }}">{{ block.settings.link_text }}</a>
+          </span>
+
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Barra de anuncios",
+  "limit": 1,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "icon_text",
+      "name": "Icono + Texto",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "package", "label": "Caja / Envío" },
+            { "value": "lock",    "label": "Candado / Seguridad" },
+            { "value": "truck",   "label": "Camión / Entrega" }
+          ],
+          "default": "package"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Pago seguro"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Enlace (opcional)"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Enlace",
+      "settings": [
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Texto del enlace",
+          "default": "Iniciar sesión"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "URL del enlace"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "icon_text",
+        "settings": { "icon": "package", "text": "Buscamos distribuidores", "link_url": "/pages/contact" }
+      },
+      {
+        "type": "icon_text",
+        "settings": { "icon": "lock", "text": "Pago seguro" }
+      },
+      {
+        "type": "icon_text",
+        "settings": { "icon": "truck", "text": "Entrega dentro de 3-5 días" }
+      },
+      {
+        "type": "link",
+        "settings": { "link_text": "Iniciar sesión" }
+      }
+    ]
+  }
+}
+{% endschema %}

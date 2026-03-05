@@ -1,0 +1,101 @@
+/* =============================================================================
+   KINGDEN — FOOTER
+   ============================================================================= */
+
+.site-footer {
+  background: var(--color-footer-bg);
+  color: var(--color-background);
+  padding-top: var(--spacing-xl);
+}
+
+.site-footer__top {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl) var(--spacing-xl);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xl);
+  align-items: start;
+}
+
+.footer-col__logo { margin-bottom: var(--spacing-md); }
+
+.footer-col__logo img {
+  height: 80px;
+  width: auto;
+}
+
+.footer-col__logo-text {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-background);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.footer-col__social {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.footer-col__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 0;
+  color: var(--color-background);
+  transition: opacity var(--transition);
+}
+.footer-col__social-link svg {
+  width: 28px;
+  height: 28px;
+}
+.footer-col__social-link:hover {
+  opacity: 0.75;
+  background: none;
+}
+
+.footer-col__heading {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-background);
+}
+
+.footer-col__text {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+}
+
+.footer-col__link {
+  display: block;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 8px;
+  transition: color var(--transition);
+}
+.footer-col__link:hover { color: #fff; }
+
+.site-footer__divider {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  margin: 0;
+}
+
+.site-footer__bottom {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--spacing-md) var(--spacing-xl);
+  text-align: center;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.9);
+}

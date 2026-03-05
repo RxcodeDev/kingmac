@@ -1,0 +1,63 @@
+<section class="logistics-notice">
+  <div class="logistics-notice__wrapper">
+
+    <div class="logistics-notice__header">
+
+      <!-- Isotipo -->
+      <div class="logistics-notice__icon">
+        <img
+          src="{{ 'images/icons/icon.png' | asset_url }}"
+          alt="Kingden isotipo"
+          width="56"
+          height="56"
+          loading="lazy"
+        >
+      </div>
+
+      <!-- Contenido -->
+      <div class="logistics-notice__content">
+        <div class="logistics-notice__title">
+          {{ section.settings.heading | default: 'ESTIMADO CLIENTE' }}
+        </div>
+        <div class="logistics-notice__text">
+          {{ section.settings.body_text | default: 'LA LOGÍSTICA DE ENVÍOS ES SUPERVISADA POR EL PROVEEDOR QUE ELIJA AL REALIZAR SUS COMPRAS, EN LA SECCIÓN DE ENVÍOS' }}
+        </div>
+        <div class="logistics-notice__thanks">
+          {{ section.settings.thanks_text | default: 'AGRADECEMOS SU PREFERENCIA' }}
+        </div>
+      </div>
+
+    </div>
+
+    <div class="logistics-notice__bar"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Aviso logístico",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "ESTIMADO CLIENTE"
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Texto principal",
+      "default": "LA LOGÍSTICA DE ENVÍOS ES SUPERVISADA POR EL PROVEEDOR QUE ELIJA AL REALIZAR SUS COMPRAS, EN LA SECCIÓN DE ENVÍOS"
+    },
+    {
+      "type": "text",
+      "id": "thanks_text",
+      "label": "Texto de agradecimiento",
+      "default": "AGRADECEMOS SU PREFERENCIA"
+    }
+  ],
+  "presets": [
+    { "name": "Aviso logístico" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,97 @@
+{%- assign collection = collections[section.settings.collection] -%}
+{%- assign _use_random = false -%}
+{%- if collection != blank and collection.products_count > 0 -%}
+  {%- assign _grid_products = collection.products -%}
+{%- elsif collections.all.products_count > 0 -%}
+  {%- assign _grid_products = collections.all.products -%}
+  {%- assign _use_random = true -%}
+{%- endif -%}
+
+<section class="shipping-section" aria-labelledby="shipping-banner-heading">
+
+  <!-- Banner Strip -->
+  <div class="shipping-banner" style="background-color: {{ section.settings.banner_bg }};">
+    <h2
+      class="shipping-banner__text"
+      id="shipping-banner-heading"
+      style="color: {{ section.settings.banner_text_color }};"
+    >
+      {{ section.settings.banner_text | default: 'ENVIOS A TODO MEXICO' }}
+    </h2>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="container shipping-section__grid">
+    <div class="product-grid{% if _use_random %} js-random-grid{% endif %}"
+         {% if _use_random %}data-random-count="{{ section.settings.products_to_show }}"{% endif %}
+         role="list">
+
+      {%- if _grid_products != blank -%}
+
+        {%- for product in _grid_products limit: 50 -%}
+          {%- if product.featured_image != blank -%}
+            {%- render 'product-card',
+              card_product: product,
+              card_section:  section,
+              show_compare:  false
+            -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+      {%- else -%}
+
+        {%- for i in (1..5) -%}
+          {%- render 'product-card-placeholder', placeholder_index: i -%}
+        {%- endfor -%}
+
+      {%- endif -%}
+
+    </div><!-- /.product-grid -->
+  </div><!-- /.container -->
+
+</section>
+
+{% schema %}
+{
+  "name": "Sección de envíos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_text",
+      "label": "Texto del banner",
+      "default": "ENVIOS A TODO MEXICO"
+    },
+    {
+      "type": "color",
+      "id": "banner_bg",
+      "label": "Color de fondo del banner",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "banner_text_color",
+      "label": "Color del texto del banner",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección de productos"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Productos a mostrar",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sección de envíos"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,149 @@
+<footer class="site-footer" role="contentinfo" aria-label="Pie de página">
+
+  <!-- Footer Columns -->
+  <div class="site-footer__top">
+
+    <!-- Column 1: Logo + Social -->
+    <div class="footer-col">
+      <div class="footer-col__logo">
+        {%- render 'logo',
+          logo_image:   section.settings.logo,
+          logo_height:  48,
+          logo_variant: 'white',
+          logo_loading: 'lazy'
+        -%}
+      </div>
+
+      {%- render 'social-icons' -%}
+    </div>
+
+    <!-- Column 2: Customer Service -->
+    <div class="footer-col">
+      <h3 class="footer-col__heading">{{ section.settings.col2_heading | default: 'SERVICIO AL CLIENTE' }}</h3>
+      <p class="footer-col__text">
+        {%- if section.settings.col2_email != blank -%}
+          <a href="mailto:{{ section.settings.col2_email }}" class="footer-col__link">
+            {{ section.settings.col2_email }}
+          </a>
+        {%- else -%}
+          <a href="mailto:servicio@kingden.com" class="footer-col__link">servicio@kingden.com</a>
+        {%- endif -%}
+      </p>
+    </div>
+
+    <!-- Column 3: Contact -->
+    <div class="footer-col">
+      <h3 class="footer-col__heading">{{ section.settings.col3_heading | default: 'CONTACTO' }}</h3>
+      <p class="footer-col__text">
+        {%- if section.settings.col3_phone != blank -%}
+          <a href="tel:{{ section.settings.col3_phone | replace: ' ', '' | replace: '-', '' }}" class="footer-col__link">
+            {{ section.settings.col3_phone }}
+          </a>
+        {%- else -%}
+          <a href="tel:5555555555" class="footer-col__link">55-5555-5555</a>
+        {%- endif -%}
+      </p>
+    </div>
+
+    <!-- Column 4: Legal -->
+    <div class="footer-col">
+      <h3 class="footer-col__heading">{{ section.settings.col4_heading | default: 'TÉRMINOS Y CONDICIONES' }}</h3>
+      {%- if section.settings.privacy_policy_url != blank -%}
+        <a href="{{ section.settings.privacy_policy_url }}" class="footer-col__link">Aviso de privacidad</a>
+      {%- else -%}
+        <a href="/pages/aviso-de-privacidad" class="footer-col__link">Aviso de privacidad</a>
+      {%- endif -%}
+      <a href="/pages/politica-de-devolucion" class="footer-col__link">Política de devolución</a>
+      <a href="/pages/politica-de-entrega" class="footer-col__link">Política de entrega</a>
+      <a href="/pages/politica-de-compra" class="footer-col__link">Política de compra</a>
+    </div>
+
+  </div><!-- /.site-footer__top -->
+
+  <!-- Divider -->
+  <hr class="site-footer__divider" aria-hidden="true">
+
+  <!-- Copyright -->
+  <div class="site-footer__bottom">
+    <p>
+      {{ section.settings.copyright_text | default: '© KINGDEN 2026 TODOS LOS DERECHOS RESERVADOS' }}
+    </p>
+  </div>
+
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (versión clara/blanca)"
+    },
+    {
+      "type": "header",
+      "content": "Columna 2 — Servicio al cliente"
+    },
+    {
+      "type": "text",
+      "id": "col2_heading",
+      "label": "Título columna 2",
+      "default": "SERVICIO AL CLIENTE"
+    },
+    {
+      "type": "text",
+      "id": "col2_email",
+      "label": "Email",
+      "default": "servicio@kingden.com"
+    },
+    {
+      "type": "header",
+      "content": "Columna 3 — Contacto"
+    },
+    {
+      "type": "text",
+      "id": "col3_heading",
+      "label": "Título columna 3",
+      "default": "CONTACTO"
+    },
+    {
+      "type": "text",
+      "id": "col3_phone",
+      "label": "Teléfono",
+      "default": "55 5659 5681"
+    },
+    {
+      "type": "header",
+      "content": "Columna 4 — Legal"
+    },
+    {
+      "type": "text",
+      "id": "col4_heading",
+      "label": "Título columna 4",
+      "default": "TÉRMINOS Y CONDICIONES"
+    },
+    {
+      "type": "url",
+      "id": "privacy_policy_url",
+      "label": "URL aviso de privacidad"
+    },
+    {
+      "type": "url",
+      "id": "cookies_url",
+      "label": "URL política de cookies"
+    },
+    {
+      "type": "header",
+      "content": "Copyright"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Texto de copyright",
+      "default": "© KINGDEN 2026 TODOS LOS DERECHOS RESERVADOS"
+    }
+  ]
+}
+{% endschema %}

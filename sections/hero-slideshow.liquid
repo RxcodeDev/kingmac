@@ -1,0 +1,154 @@
+<div
+  class="hero-slideshow"
+  data-autoplay="{{ section.settings.autoplay_speed | times: 1000 }}"
+  aria-label="Slideshow de inicio"
+  role="region"
+>
+  <!-- Slides Track -->
+  <div class="hero-slideshow__track" role="list">
+    {%- for block in section.blocks -%}
+      <div class="hero-slide" role="listitem" {{ block.shopify_attributes }}>
+
+        {%- if block.settings.image != blank -%}
+          <img
+            class="hero-slide__img"
+            src="{{ block.settings.image | img_url: '1600x' }}"
+            srcset="{{ block.settings.image | img_url: '800x' }} 800w,
+                    {{ block.settings.image | img_url: '1200x' }} 1200w,
+                    {{ block.settings.image | img_url: '1600x' }} 1600w"
+            sizes="100vw"
+            alt="{{ block.settings.image.alt | escape | default: block.settings.title }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          >
+        {%- elsif block.settings.asset_image != blank -%}
+          <img
+            class="hero-slide__img"
+            src="{{ block.settings.asset_image | asset_url }}"
+            alt="{{ block.settings.title | escape }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          >
+        {%- else -%}
+          <div class="hero-placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+      </div>
+    {%- endfor -%}
+  </div><!-- /.hero-slideshow__track -->
+
+  <!-- Navigation Arrows -->
+  {%- if section.blocks.size > 1 -%}
+    <button
+      class="hero-slideshow__btn hero-slideshow__btn--prev"
+      aria-label="Diapositiva anterior"
+      type="button"
+    >
+      {%- render 'icon', icon_name: 'chevron-left', icon_size: 20 -%}
+    </button>
+    <button
+      class="hero-slideshow__btn hero-slideshow__btn--next"
+      aria-label="Siguiente diapositiva"
+      type="button"
+    >
+      {%- render 'icon', icon_name: 'chevron-right', icon_size: 20 -%}
+    </button>
+
+    <!-- Dots -->
+    <div class="hero-slideshow__dots" role="tablist" aria-label="Diapositivas">
+      {%- for block in section.blocks -%}
+        <button
+          class="hero-slideshow__dot{% if forloop.first %} is-active{% endif %}"
+          role="tab"
+          aria-label="Diapositiva {{ forloop.index }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          type="button"
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Hero Slideshow",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Velocidad de autoplay (segundos)",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Diapositiva",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "asset_image",
+          "label": "Imagen local (nombre de archivo en assets)",
+          "info": "Ej: images/wallpapers/bane_001.png"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Bienvenido a Kingden"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo",
+          "default": "Equipos dentales de alta calidad"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto del botón",
+          "default": "Ver Catálogo"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Enlace del botón"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slideshow",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Bienvenido a Kingden",
+            "subtitle": "Equipos dentales de alta calidad",
+            "button_label": "Ver Catálogo"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Envíos a Todo México",
+            "subtitle": "Proveedor certificado de equipos médicos",
+            "button_label": "Comprar Ahora"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

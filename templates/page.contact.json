@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "contact_form": {
+      "type": "contact-form",
+      "settings": {
+        "title": "Buscamos Distribuidores",
+        "subtitle": "¿Tienes un negocio dental? Únete a nuestra red de distribuidores y ofrece los mejores productos Kingden.",
+        "info_title": "¿Por qué ser distribuidor?",
+        "info_text": "<p>✔ Precios preferenciales de mayoreo<\/p><p>✔ Catálogo completo de productos odontológicos<\/p><p>✔ Soporte y capacitación incluidos<\/p><p>✔ Envíos a toda la República<\/p>",
+        "email": "distribuidores@kingden.com",
+        "btn_label": "Enviar solicitud",
+        "success_msg": "¡Gracias! Nos pondremos en contacto contigo pronto."
+      }
+    }
+  },
+  "order": ["contact_form"]
+}

@@ -1,0 +1,214 @@
+<section class="cart-page">
+  <div class="cart-page__container">
+    <h1 class="cart-page__title">Tu Carrito</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-page__empty">
+        <p>Tu carrito está vacío.</p>
+        <a href="/collections/all" class="btn btn--primary">Ver productos</a>
+      </div>
+    {%- else -%}
+      <div class="cart-page__layout">
+
+        <!-- ITEMS -->
+        <div class="cart-page__items">
+          {%- for item in cart.items -%}
+            <div class="cart-page__item">
+              <a href="{{ item.url }}">
+                <img
+                  class="cart-page__item-img"
+                  src="{{ item.image | img_url: '120x120', crop: 'center' }}"
+                  alt="{{ item.title | escape }}"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                >
+              </a>
+              <div class="cart-page__item-info">
+                <a class="cart-page__item-title" href="{{ item.url }}">{{ item.product.title }}</a>
+                {%- unless item.variant.title == 'Default Title' -%}
+                  <p class="cart-page__item-variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <p class="cart-page__item-price">{{ item.final_line_price | money }}</p>
+
+                <div class="cart-page__qty-row">
+                  <form action="/cart/change" method="post" class="cart-page__qty-form">
+                    <input type="hidden" name="id" value="{{ item.key }}">
+                    <button type="submit" name="quantity" value="{{ item.quantity | minus: 1 }}" class="cart-page__qty-btn" aria-label="Disminuir">−</button>
+                    <span class="cart-page__qty-val">{{ item.quantity }}</span>
+                    <button type="submit" name="quantity" value="{{ item.quantity | plus: 1 }}" class="cart-page__qty-btn" aria-label="Aumentar">+</button>
+                  </form>
+                  <form action="/cart/change" method="post">
+                    <input type="hidden" name="id" value="{{ item.key }}">
+                    <input type="hidden" name="quantity" value="0">
+                    <button type="submit" class="cart-page__remove" aria-label="Eliminar">Eliminar</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- RESUMEN -->
+        <div class="cart-page__summary">
+          <h2 class="cart-page__summary-title">Resumen del pedido</h2>
+          <div class="cart-page__summary-row">
+            <span>Subtotal ({{ cart.item_count }} {% if cart.item_count == 1 %}artículo{% else %}artículos{% endif %})</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart-page__summary-note">Los impuestos y gastos de envío se calculan al finalizar la compra.</p>
+          <a href="/checkout" class="btn btn--primary cart-page__checkout-btn">Proceder al pago</a>
+          <a href="/collections/all" class="cart-page__continue">← Seguir comprando</a>
+        </div>
+
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+.cart-page {
+  padding: var(--spacing-xl) var(--spacing-md);
+  min-height: 60vh;
+}
+.cart-page__container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.cart-page__title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 3px solid var(--color-accent);
+}
+.cart-page__empty {
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+  color: var(--color-gray);
+}
+.cart-page__empty p { font-size: 1.1rem; margin-bottom: var(--spacing-lg); }
+
+.cart-page__layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--spacing-xl);
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .cart-page__layout { grid-template-columns: 1fr; }
+}
+
+/* ITEM */
+.cart-page__item {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) 0;
+  border-bottom: 1px solid #eee;
+}
+.cart-page__item-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  background: #f5f5f5;
+  flex-shrink: 0;
+}
+.cart-page__item-info { flex: 1; }
+.cart-page__item-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 4px;
+}
+.cart-page__item-title:hover { color: var(--color-accent); }
+.cart-page__item-variant { font-size: 0.82rem; color: var(--color-gray); margin-bottom: 4px; }
+.cart-page__item-price { font-size: 1rem; font-weight: 700; color: var(--color-accent); margin-bottom: var(--spacing-sm); }
+
+.cart-page__qty-row { display: flex; align-items: center; gap: var(--spacing-md); flex-wrap: wrap; }
+.cart-page__qty-form { display: flex; align-items: center; gap: 8px; }
+.cart-page__qty-btn {
+  background: #f0f0f0;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--color-primary);
+  transition: background var(--transition);
+}
+.cart-page__qty-btn:hover { background: var(--color-accent); color: #fff; }
+.cart-page__qty-val { font-weight: 700; font-size: 0.95rem; min-width: 24px; text-align: center; }
+.cart-page__remove {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+.cart-page__remove:hover { color: #e53e3e; }
+
+/* SUMMARY */
+.cart-page__summary {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  position: sticky;
+  top: 120px;
+}
+.cart-page__summary-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-lg);
+}
+.cart-page__summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary);
+}
+.cart-page__summary-note {
+  font-size: 0.78rem;
+  color: var(--color-gray);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.5;
+}
+.cart-page__checkout-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  font-size: 1rem;
+}
+.cart-page__continue {
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-gray);
+  text-decoration: none;
+}
+.cart-page__continue:hover { color: var(--color-accent); }
+</style>
+
+{% schema %}
+{
+  "name": "Carrito",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+{%- comment -%}
+  SNIPPET: logo.liquid
+  Renders the shop logo — custom image if uploaded, else fallback asset.
+
+  Parameters:
+    - logo_image    {image}   Optional. Image object from section.settings.logo.
+    - logo_height   {integer} Optional. Rendered height in px. Default: 46.
+    - logo_variant  {string}  Optional. 'white' (default) | 'color'. Selects fallback asset.
+    - logo_loading  {string}  Optional. 'eager' | 'lazy'. Default: 'lazy'.
+{%- endcomment -%}
+
+{%- assign _height  = logo_height  | default: 46 -%}
+{%- assign _variant = logo_variant | default: 'white' -%}
+{%- assign _loading = logo_loading | default: 'lazy' -%}
+{%- assign _fallback_src = 'images/logos/' | append: _variant | append: '.png' | asset_url -%}
+
+{%- if logo_image != blank -%}
+  <img
+    src="{{ logo_image | img_url: '300x' }}"
+    alt="{{ shop.name }}"
+    height="{{ _height }}"
+    loading="{{ _loading }}"
+  >
+{%- else -%}
+  <img
+    src="{{ _fallback_src }}"
+    alt="{{ shop.name }}"
+    height="{{ _height }}"
+    loading="{{ _loading }}"
+  >
+{%- endif -%}

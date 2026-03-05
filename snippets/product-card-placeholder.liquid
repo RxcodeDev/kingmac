@@ -1,0 +1,42 @@
+{%- comment -%}
+  SNIPPET: product-card-placeholder.liquid
+  Renders a single placeholder product card (no product data needed).
+  Used in the editor / customizer when no collection is assigned.
+
+  Parameters:
+    - placeholder_index  {integer}  1-5. Selects the placeholder SVG variant.
+{%- endcomment -%}
+
+{%- assign _idx = placeholder_index | default: 1 -%}
+
+<article class="product-card product-card--placeholder" role="listitem" aria-hidden="true">
+
+  <div class="product-card__body">
+    <h3 class="product-card__title">Producto</h3>
+  </div>
+
+  <div class="product-card__image-wrap">
+    <div class="product-card__image-placeholder">
+      {{ 'product-' | append: _idx | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+  </div>
+
+  <div class="product-card__desc-wrap">
+    <p class="product-card__desc">En este apartado debe ir una descripción corta</p>
+  </div>
+
+  <div class="product-card__footer">
+    <span class="product-card__price">$599</span>
+    <button class="product-card__btn" type="button" disabled aria-disabled="true" aria-label="Sin producto">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="9" cy="21" r="1"/>
+        <circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      CARRITO
+    </button>
+  </div>
+
+</article>

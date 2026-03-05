@@ -1,0 +1,225 @@
+{%- comment -%}
+  Resolve product by handle (all_products['handle'] = direct lookup, no iteration limit).
+  Falls back to the product picker, then to static manual fields.
+{%- endcomment -%}
+
+{%- assign _hl_product = nil -%}
+{%- assign _handle     = section.settings.product_handle | strip | downcase -%}
+
+{%- if _handle != blank -%}
+  {%- assign _hl_product = all_products[_handle] -%}
+  {%- if _hl_product.id == blank -%}
+    {%- assign _hl_product = nil -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- unless _hl_product -%}
+  {%- assign _hl_product = section.settings.product -%}
+{%- endunless -%}
+
+{%- if _hl_product != blank -%}
+  {%- assign _hl_title       = _hl_product.title -%}
+  {%- assign _hl_body        = _hl_product.description | strip_html | truncatewords: 40 -%}
+  {%- assign _hl_variant     = _hl_product.first_available_variant | default: _hl_product.variants.first -%}
+  {%- assign _hl_price       = _hl_variant.price | money -%}
+  {%- assign _hl_compare     = _hl_variant.compare_at_price -%}
+  {%- assign _hl_image       = _hl_product.featured_image -%}
+  {%- assign _hl_url         = _hl_product.url -%}
+  {%- assign _hl_btn_label   = section.settings.button_label | default: 'VER PRODUCTO' -%}
+{%- else -%}
+  {%- assign _hl_title       = section.settings.title -%}
+  {%- assign _hl_body        = section.settings.body_text -%}
+  {%- assign _hl_price       = section.settings.price -%}
+  {%- assign _hl_compare     = section.settings.compare_price -%}
+  {%- assign _hl_image       = section.settings.image -%}
+  {%- assign _hl_url         = section.settings.button_url | default: '#' -%}
+  {%- assign _hl_btn_label   = section.settings.button_label -%}
+{%- endif -%}
+
+<section
+  class="content-highlight"
+  aria-labelledby="highlight-title-{{ section.id }}"
+  style="background-color: {{ section.settings.bg_color }};"
+>
+
+  <!-- Parallax background layer (driven by theme.js → Parallax.init()) -->
+  <div
+    class="content-highlight__pattern"
+    aria-hidden="true"
+    {%- if section.settings.bg_image != blank -%}
+      style="background-image: url('{{ section.settings.bg_image | img_url: '2400x1200', crop: 'center' }}');"
+    {%- endif -%}
+  ></div>
+
+  <div class="content-highlight__inner container">
+
+    <!-- LEFT: Text content -->
+    <div class="content-highlight__text">
+
+      {%- if _hl_title != blank -%}
+        <h2
+          class="content-highlight__title"
+          id="highlight-title-{{ section.id }}"
+        >{{ _hl_title }}</h2>
+      {%- endif -%}
+
+      {%- if _hl_body != blank -%}
+        <p class="content-highlight__body">{{ _hl_body }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.body_text_2 != blank and _hl_product == blank -%}
+        <p class="content-highlight__body">{{ section.settings.body_text_2 }}</p>
+      {%- endif -%}
+
+      {%- if _hl_price != blank -%}
+        <div class="content-highlight__pricing">
+          {%- if _hl_compare != blank and _hl_compare != 0 -%}
+            <s class="content-highlight__compare-price">{{ _hl_compare | money }}</s>
+            <span class="content-highlight__price-separator">&ndash;</span>
+          {%- endif -%}
+          <span class="content-highlight__price">{{ _hl_price }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if _hl_btn_label != blank -%}
+        <a
+          href="{{ _hl_url }}"
+          class="btn btn--primary content-highlight__btn"
+        >{{ _hl_btn_label }}</a>
+      {%- endif -%}
+
+    </div><!-- /.content-highlight__text -->
+
+    <!-- RIGHT: Product image -->
+    <div class="content-highlight__media">
+      {%- if _hl_image != blank -%}
+        <img
+          class="content-highlight__image"
+          src="{{ _hl_image | img_url: '800x800' }}"
+          srcset="
+            {{ _hl_image | img_url: '400x400' }} 400w,
+            {{ _hl_image | img_url: '600x600' }} 600w,
+            {{ _hl_image | img_url: '800x800' }} 800w
+          "
+          sizes="(max-width: 768px) 100vw, 45vw"
+          alt="{{ _hl_image.alt | escape | default: _hl_title | escape }}"
+          loading="lazy"
+          width="800"
+          height="800"
+        >
+      {%- else -%}
+        <div class="content-highlight__placeholder">
+          {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div><!-- /.content-highlight__media -->
+
+  </div><!-- /.content-highlight__inner -->
+</section>
+
+{% schema %}
+{
+  "name": "Producto destacado",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Producto de Shopify"
+    },
+    {
+      "type": "text",
+      "id": "product_handle",
+      "label": "Handle del producto",
+      "info": "URL del producto sin '/products/'. Encuéntralo en Admin → Productos → clic en el producto → sección 'Vista previa de URL'. Ej: kin-18n"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto",
+      "info": "Selecciona el producto (SKU: KIN-18N). Si está seleccionado, sus datos reemplazarán los campos manuales."
+    },
+    {
+      "type": "header",
+      "content": "Contenido manual (fallback)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título del producto",
+      "default": "NOMBRE DEL PRODUCTO DESTACADO"
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Descripción (párrafo 1)",
+      "default": "Descripción principal del producto o promoción."
+    },
+    {
+      "type": "textarea",
+      "id": "body_text_2",
+      "label": "Descripción (párrafo 2)"
+    },
+    {
+      "type": "header",
+      "content": "Precio"
+    },
+    {
+      "type": "text",
+      "id": "compare_price",
+      "label": "Precio anterior (tachado)",
+      "info": "Ej: $53,000.00"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Precio actual",
+      "info": "Ej: $37,390.00"
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "MÁS INFORMACIÓN"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Imagen y fondo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen del producto"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Imagen de fondo (parallax)",
+      "info": "Se mueve con efecto parallax al hacer scroll"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Producto destacado",
+      "settings": {
+        "title": "NOMBRE DEL PRODUCTO DESTACADO",
+        "body_text": "Descripción principal del producto o promoción.",
+        "button_label": "MÁS INFORMACIÓN"
+      }
+    }
+  ]
+}
+{% endschema %}

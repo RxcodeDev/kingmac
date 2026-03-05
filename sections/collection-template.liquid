@@ -1,0 +1,439 @@
+{%- comment -%}
+  SECTION: collection-template.liquid
+  Página de catálogo — banner + sidebar de filtros + grilla de productos + paginación
+  Usada en templates/collection.json
+{%- endcomment -%}
+
+{%- assign col = collection -%}
+
+{%- comment -%} ── Parámetros de URL ──────────────────────────────────────── {%- endcomment -%}
+{%- assign current_sort  = sort_by | default: collection.default_sort_by -%}
+{%- assign current_tags  = current_tags -%}
+
+{%- paginate collection.products by section.settings.products_per_page -%}
+
+
+
+<!-- ═══ BREADCRUMB ═══════════════════════════════════════════════════════ -->
+<div class="collection-breadcrumb">
+  <div class="container">
+    <nav aria-label="Ruta de navegación">
+      <ol class="breadcrumb">
+        <li class="breadcrumb__item"><a href="/">Inicio</a></li>
+        <li class="breadcrumb__item breadcrumb__item--sep" aria-hidden="true">/</li>
+        <li class="breadcrumb__item breadcrumb__item--current" aria-current="page">{{ col.title }}</li>
+        {%- if current_tags -%}
+          {%- for tag in current_tags -%}
+            <li class="breadcrumb__item breadcrumb__item--sep" aria-hidden="true">/</li>
+            <li class="breadcrumb__item breadcrumb__item--current">{{ tag }}</li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!-- ═══ MAIN LAYOUT: sidebar + grid ══════════════════════════════════════ -->
+<div class="collection-layout container">
+
+  <!-- ── SIDEBAR TOGGLE (mobile) ──────────────────────────────────────── -->
+  <button
+    class="collection-filter-toggle js-filter-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="collection-sidebar"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="4" y1="6" x2="20" y2="6"/>
+      <line x1="8" y1="12" x2="16" y2="12"/>
+      <line x1="10" y1="18" x2="14" y2="18"/>
+    </svg>
+    Filtros
+    {%- if current_tags -%}
+      <span class="collection-filter-toggle__badge">{{ current_tags | size }}</span>
+    {%- endif -%}
+  </button>
+
+  <!-- ── SIDEBAR ───────────────────────────────────────────────────────── -->
+  <aside
+    id="collection-sidebar"
+    class="collection-sidebar"
+    aria-label="Filtros de colección"
+  >
+
+    {%- comment -%} Active tag chips {%- endcomment -%}
+    {%- if current_tags -%}
+      <div class="filter-group filter-group--active-chips">
+        <div class="filter-group__chips">
+          {%- for tag in current_tags -%}
+            <a
+              href="{{ collection.url }}/{% for t in current_tags %}{% unless t == tag %}{{ t | handle }}{% unless forloop.last %}+{% endunless %}{% endunless %}{% endfor %}"
+              class="filter-chip filter-chip--active"
+              aria-label="Quitar filtro {{ tag }}"
+            >
+              {{ tag }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </a>
+          {%- endfor -%}
+          <a href="{{ collection.url }}" class="filter-chip filter-chip--clear">Limpiar todo</a>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Sort By {%- endcomment -%}
+    {%- if section.settings.show_sort -%}
+      <div class="filter-group js-filter-group">
+        <button class="filter-group__header js-filter-group-toggle" type="button" aria-expanded="true">
+          <span>Ordenar por</span>
+          <svg class="filter-group__chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="filter-group__body">
+          <form class="filter-sort-form" action="{{ collection.url }}" method="get">
+            {%- if current_tags -%}
+              <input type="hidden" name="q[tag]" value="{{ current_tags | join: '+' }}">
+            {%- endif -%}
+            <select name="sort_by" class="filter-sort-select js-sort-select" aria-label="Ordenar productos">
+              {%- assign sort_options = "manual,Destacados|best-selling,Más vendidos|title-ascending,A → Z|title-descending,Z → A|price-ascending,Menor precio|price-descending,Mayor precio|created-ascending,Más antiguos|created-descending,Más nuevos" | split: "|" -%}
+              {%- for opt in sort_options -%}
+                {%- assign opt_parts = opt | split: "," -%}
+                <option value="{{ opt_parts[0] }}" {% if current_sort == opt_parts[0] %}selected{% endif %}>
+                  {{ opt_parts[1] }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </form>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Disponibilidad {%- endcomment -%}
+    {%- if section.settings.show_availability -%}
+      <div class="filter-group js-filter-group">
+        <button class="filter-group__header js-filter-group-toggle" type="button" aria-expanded="true">
+          <span>Disponibilidad</span>
+          <svg class="filter-group__chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="filter-group__body">
+          <label class="filter-checkbox">
+            <input type="checkbox" class="js-filter-available" {% if available_products %} checked {% endif %}>
+            <span>Solo en stock</span>
+          </label>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Tags / Subcategorías — mapa fijo por colección {%- endcomment -%}
+    {%- if section.settings.show_tags -%}
+      {%- assign sub_items = '' -%}
+      {%- case col.handle -%}
+        {%- when 'laboratorio' -%}
+          {%- assign sub_items = 'MICROMOTORES|ARTICULADORES|MAQUINARIA' -%}
+        {%- when 'equipo' -%}
+          {%- assign sub_items = 'CÁMARAS Y LAMPARAS|ESTERILIZADORES' -%}
+        {%- when 'instrumental' -%}
+          {%- assign sub_items = 'RETRACTORES|ARCOS|UTENCILIOS' -%}
+        {%- when 'practica' -%}
+          {%- assign sub_items = 'MODELOS ANATÓMICOS Y DENTALES|TIPODONTOS|PIEL SINTETICA|CAJAS|PROTECCIÓN' -%}
+        {%- when 'ortodoncia' -%}
+          {%- assign sub_items = 'ADITAMENTOS|ARCOS Y ALAMBRES|PINZAS|RESINAS' -%}
+        {%- when 'unidades' -%}
+          {%- assign sub_items = 'UNIDADES DENTALES BASICAS|UNIDADES DENTALES PRO|FUNDAS Y TAPIZADO|PAQUETES' -%}
+        {%- when 'mayoreo' -%}
+          {%- assign sub_items = 'LOS MÁS VENDIDOS|ZONA DE REMATES' -%}
+      {%- endcase -%}
+
+      {%- if sub_items != '' -%}
+        {%- assign sub_list = sub_items | split: '|' -%}
+        <div class="filter-group js-filter-group">
+          <button class="filter-group__header js-filter-group-toggle" type="button" aria-expanded="true">
+            <span>Subcategorías</span>
+            <svg class="filter-group__chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="filter-group__body">
+            {%- for sub in sub_list -%}
+              {%- assign sub_handle = sub | handle -%}
+              {%- assign sub_active = false -%}
+              {%- if current_tags contains sub or current_tags contains sub_handle -%}
+                {%- assign sub_active = true -%}
+              {%- endif -%}
+              <a
+                href="{% if sub_active %}{{ col.url }}{% else %}{{ col.url }}/{{ sub_handle }}{% endif %}"
+                class="filter-tag-link{% if sub_active %} is-active{% endif %}"
+                {% if sub_active %}aria-current="true"{% endif %}
+              >
+                <span class="filter-tag-link__dot"></span>
+                {{ sub }}
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- elsif col.all_tags.size > 0 -%}
+        {%- comment -%} Fallback: muestra tags dinámicos si la colección no está en el mapa {%- endcomment -%}
+        <div class="filter-group js-filter-group">
+          <button class="filter-group__header js-filter-group-toggle" type="button" aria-expanded="true">
+            <span>Categorías</span>
+            <svg class="filter-group__chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="filter-group__body">
+            {%- for tag in col.all_tags -%}
+              {%- assign tag_active = false -%}
+              {%- if current_tags contains tag -%}{%- assign tag_active = true -%}{%- endif -%}
+              <a
+                href="{% if tag_active %}{{ col.url }}{% else %}{{ col.url }}/{{ tag | handle }}{% endif %}"
+                class="filter-tag-link{% if tag_active %} is-active{% endif %}"
+                {% if tag_active %}aria-current="true"{% endif %}
+              >
+                <span class="filter-tag-link__dot"></span>
+                {{ tag }}
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} Precio (rango visual — requiere JS) {%- endcomment -%}
+    {%- if section.settings.show_price -%}
+      {%- assign price_min = col.products | map: 'price' | sort | first | divided_by: 100.0 -%}
+      {%- assign price_max = col.products | map: 'price' | sort | last  | divided_by: 100.0 -%}
+      <div class="filter-group js-filter-group js-price-filter-group">
+        <button class="filter-group__header js-filter-group-toggle" type="button" aria-expanded="true">
+          <span>Precio</span>
+          <svg class="filter-group__chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="filter-group__body">
+          <div class="filter-price">
+            <div class="filter-price__track">
+              <div class="filter-price__fill" id="price-fill"></div>
+              <input
+                type="range"
+                class="filter-price__range filter-price__range--min js-price-min"
+                min="{{ price_min | floor }}"
+                max="{{ price_max | ceil }}"
+                value="{{ price_min | floor }}"
+                data-min="{{ price_min | floor }}"
+                data-max="{{ price_max | ceil }}"
+                step="10"
+              >
+              <input
+                type="range"
+                class="filter-price__range filter-price__range--max js-price-max"
+                min="{{ price_min | floor }}"
+                max="{{ price_max | ceil }}"
+                value="{{ price_max | ceil }}"
+                step="10"
+              >
+            </div>
+            <div class="filter-price__labels">
+              <span class="js-price-min-label">${{ price_min | floor }}</span>
+              <span class="js-price-max-label">${{ price_max | ceil }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+  </aside><!-- /.collection-sidebar -->
+
+  <!-- ── MAIN CONTENT ──────────────────────────────────────────────────── -->
+  <div class="collection-main">
+
+    <!-- Toolbar: count + sort inline (desktop) -->
+    <div class="collection-toolbar">
+      <p class="collection-toolbar__count">
+        {%- if col.products_count > 0 -%}
+          <strong>{{ col.products_count }}</strong> productos en <strong>{{ col.title }}</strong>
+        {%- else -%}
+          Sin productos
+        {%- endif -%}
+      </p>
+
+      {%- if section.settings.show_sort -%}
+        <form class="collection-toolbar__sort" action="{{ collection.url }}" method="get" aria-label="Orden de resultados">
+          <label for="toolbar-sort" class="collection-toolbar__sort-label">Ordenar:</label>
+          <select id="toolbar-sort" name="sort_by" class="filter-sort-select js-sort-select-toolbar">
+            {%- for opt in sort_options -%}
+              {%- assign opt_parts = opt | split: "," -%}
+              <option value="{{ opt_parts[0] }}" {% if current_sort == opt_parts[0] %}selected{% endif %}>
+                {{ opt_parts[1] }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </form>
+      {%- endif -%}
+
+      <!-- Columns toggle -->
+      <div class="collection-toolbar__cols" role="group" aria-label="Columnas de vista">
+        <button class="col-toggle js-col-toggle {% if section.settings.columns == 3 %}is-active{% endif %}" data-cols="3" type="button" aria-label="3 columnas">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <rect x="2"  y="3" width="6" height="18" rx="1"/><rect x="9"  y="3" width="6" height="18" rx="1"/><rect x="16" y="3" width="6" height="18" rx="1"/>
+          </svg>
+        </button>
+        <button class="col-toggle js-col-toggle {% if section.settings.columns == 4 %}is-active{% endif %}" data-cols="4" type="button" aria-label="4 columnas">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <rect x="1"  y="3" width="5" height="18" rx="1"/><rect x="7"  y="3" width="5" height="18" rx="1"/><rect x="13" y="3" width="5" height="18" rx="1"/><rect x="19" y="3" width="5" height="18" rx="1"/>
+          </svg>
+        </button>
+      </div>
+    </div><!-- /.collection-toolbar -->
+
+    <!-- Product grid -->
+    <div
+      class="collection-grid js-collection-grid"
+      role="list"
+      data-cols="{{ section.settings.columns }}"
+      style="--col-count: {{ section.settings.columns }};"
+    >
+      {%- if col != blank and col.products_count > 0 -%}
+        {%- for product in col.products -%}
+          {%- render 'product-card',
+            card_product: product,
+            card_section:  section,
+            show_compare:  true
+          -%}
+        {%- endfor -%}
+      {%- else -%}
+        <div class="collection-empty-banner" aria-live="polite">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <p class="collection-empty-banner__title">Próximamente</p>
+          <p class="collection-empty-banner__sub">Estamos preparando los productos de esta categoría. ¡Vuelve pronto!</p>
+        </div>
+      {%- endif -%}
+    </div><!-- /.collection-grid -->
+
+    <!-- Pagination -->
+    {%- if paginate.pages > 1 -%}
+      <nav class="collection-pagination" aria-label="Paginación de productos">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" class="pagination-btn pagination-btn--prev" aria-label="Página anterior">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" class="pagination-btn">{{ part.title }}</a>
+          {%- elsif part.title == paginate.current_page -%}
+            <span class="pagination-btn pagination-btn--current" aria-current="page">{{ part.title }}</span>
+          {%- else -%}
+            <span class="pagination-btn pagination-btn--ellipsis">…</span>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="pagination-btn pagination-btn--next" aria-label="Página siguiente">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+
+  </div><!-- /.collection-main -->
+
+</div><!-- /.collection-layout -->
+
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Catálogo de colección",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Imagen del banner (sobreescribe la de la colección)"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columnas de producto",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Productos por página",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Mostrar ordenamiento",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Mostrar filtro por etiquetas",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_availability",
+      "label": "Mostrar filtro de disponibilidad",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Mostrar filtro de precio",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "default_desc",
+      "label": "Descripción por defecto en tarjeta",
+      "default": "Material odontológico de alta calidad"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Catálogo de colección"
+    }
+  ]
+}
+{% endschema %}

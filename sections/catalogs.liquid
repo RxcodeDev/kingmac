@@ -1,0 +1,154 @@
+<section
+  class="catalogs-section"
+  style="background-color: {{ section.settings.bg_color }};"
+  aria-labelledby="catalogs-cta"
+>
+  <div class="catalogs-section__inner">
+
+    <!-- CTA Text -->
+    <div class="catalogs-section__cta">
+      <p
+        class="catalogs-section__cta-text"
+        id="catalogs-cta"
+        style="color: {{ section.settings.cta_color }};"
+      >
+        {{ section.settings.cta_text | default: 'DESCÁRGALOS YA' }}
+      </p>
+    </div>
+
+    <!-- Catalog Grid -->
+    {%- assign fallback_covers = 'images/icons/catEquipos.png,images/icons/catMateriales.png,images/icons/catProtecion.png,images/icons/catLab.png' | split: ',' -%}
+    <div class="catalogs-grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- assign fallback_img = fallback_covers[forloop.index0] -%}
+        {%- if block.settings.pdf_filename != blank -%}
+          {%- assign pdf_href = block.settings.pdf_filename | asset_url -%}
+        {%- elsif block.settings.file_url != blank -%}
+          {%- assign pdf_href = block.settings.file_url -%}
+        {%- else -%}
+          {%- assign pdf_href = nil -%}
+        {%- endif -%}
+        <a
+          href="{{ pdf_href | default: '#' }}"
+          class="catalog-card"
+          role="listitem"
+          {%- if pdf_href != nil -%}
+            download
+            target="_blank"
+            rel="noopener noreferrer"
+          {%- endif -%}
+          aria-label="Descargar {{ block.settings.title }}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="catalog-card__thumb">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 260 }}"
+                alt="{{ block.settings.image.alt | escape | default: block.settings.title | escape }}"
+                width="130"
+                height="175"
+                loading="lazy"
+              >
+            {%- else -%}
+              <img
+                src="{{ fallback_img | asset_url }}"
+                alt="{{ block.settings.title | escape }}"
+                width="130"
+                height="175"
+                loading="lazy"
+              >
+            {%- endif -%}
+          </div>
+          <span class="catalog-card__label">{{ block.settings.title | default: 'Catálogo' }}</span>
+        </a>
+
+      {%- else -%}
+        {%- assign catalog_covers = 'images/icons/catEquipos.png,images/icons/catLab.png,images/icons/catMateriales.png,images/icons/catProtecion.png' | split: ',' -%}
+        {%- assign catalog_titles = 'Equipos 2026,Laboratorio 2026,Materiales 2026,Protección 2026' | split: ',' -%}
+        {%- for i in (0..3) -%}
+          <div class="catalog-card" role="listitem">
+            <div class="catalog-card__thumb">
+              <img
+                src="{{ catalog_covers[i] | asset_url }}"
+                alt="{{ catalog_titles[i] }}"
+                width="130"
+                height="175"
+                loading="lazy"
+              >
+            </div>
+            <span class="catalog-card__label">{{ catalog_titles[i] }}</span>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div><!-- /.catalogs-grid -->
+
+  </div><!-- /.catalogs-section__inner -->
+</section>
+
+{% schema %}
+{
+  "name": "Catálogos descargables",
+  "settings": [
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Texto CTA",
+      "default": "DESCÁRGALOS YA"
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "Color del texto CTA",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "catalog",
+      "name": "Catálogo",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portada del catálogo"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título del catálogo",
+          "default": "Equipos 2026"
+        },
+        {
+          "type": "text",
+          "id": "pdf_filename",
+          "label": "Nombre del archivo PDF en assets/",
+          "info": "Ej: cat-equipos.pdf — sube el PDF a la carpeta assets/ del tema"
+        },
+        {
+          "type": "url",
+          "id": "file_url",
+          "label": "O pega un URL externo del PDF"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Catálogos descargables",
+      "blocks": [
+        { "type": "catalog", "settings": { "title": "Equipos 2026" } },
+        { "type": "catalog", "settings": { "title": "Materiales 2026" } },
+        { "type": "catalog", "settings": { "title": "Ortodoncia 2026" } },
+        { "type": "catalog", "settings": { "title": "Laboratorio 2026" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
