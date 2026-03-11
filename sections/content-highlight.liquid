@@ -1,6 +1,6 @@
 {%- comment -%}
   Resolve product by handle (all_products['handle'] = direct lookup, no iteration limit).
-  Falls back to the product picker, then to static manual fields.
+  Falls back to the product picker, then to a random product, then to static manual fields.
 {%- endcomment -%}
 
 {%- assign _hl_product = nil -%}
@@ -17,6 +17,14 @@
   {%- assign _hl_product = section.settings.product -%}
 {%- endunless -%}
 
+{%- comment -%} Si aún no hay producto, tomar uno random de la tienda {%- endcomment -%}
+{%- unless _hl_product -%}
+  {%- if collections.all.products.size > 0 -%}
+    {%- assign random_index = 'now' | date: '%S' | modulo: collections.all.products.size -%}
+    {%- assign _hl_product = collections.all.products[random_index] -%}
+  {%- endif -%}
+{%- endunless -%}
+
 {%- assign _is_real_product = false -%}
 {%- if _hl_product != blank -%}
   {%- assign _is_real_product = true -%}
@@ -29,13 +37,14 @@
   {%- assign _hl_url         = _hl_product.url -%}
   {%- assign _hl_btn_label   = section.settings.button_label | default: 'VER PRODUCTO' -%}
 {%- else -%}
-  {%- assign _hl_title       = section.settings.title -%}
-  {%- assign _hl_body        = section.settings.body_text -%}
+  {%- comment -%} Fallback a contenido manual o valores por defecto {%- endcomment -%}
+  {%- assign _hl_title       = section.settings.title | default: 'Producto Destacado' -%}
+  {%- assign _hl_body        = section.settings.body_text | default: 'Agrega productos a tu tienda o configura esta sección desde el Theme Editor.' -%}
   {%- assign _hl_price       = section.settings.price -%}
   {%- assign _hl_compare     = section.settings.compare_price -%}
   {%- assign _hl_image       = section.settings.image -%}
-  {%- assign _hl_url         = section.settings.button_url | default: '#' -%}
-  {%- assign _hl_btn_label   = section.settings.button_label -%}
+  {%- assign _hl_url         = section.settings.button_url | default: '/collections/all' -%}
+  {%- assign _hl_btn_label   = section.settings.button_label | default: 'VER CATÁLOGO' -%}
 {%- endif -%}
 
 <section

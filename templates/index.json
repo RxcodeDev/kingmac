@@ -51,13 +51,13 @@
       "type": "content-highlight",
       "settings": {
         "product_handle": "",
-        "title": "UNIDADES DENTALES PREMIUM",
-        "body_text": "Equipamiento profesional con financiamiento disponible. Tecnología de última generación para tu consultorio dental.",
-        "body_text_2": "Calidad profesional, financiamiento disponible y entrega rápida.",
-        "compare_price": "$53,000.00",
-        "price": "$37,390.00",
-        "button_label": "MÁS INFORMACIÓN",
-        "button_url": "/collections/all",
+        "title": "",
+        "body_text": "",
+        "body_text_2": "",
+        "compare_price": "",
+        "price": "",
+        "button_label": "VER PRODUCTO",
+        "button_url": "",
         "bg_color": "#f4f6f9"
       }
     },
