@@ -118,18 +118,19 @@
   transition: transform var(--transition);
   text-decoration: none;
   background: transparent;
-  padding: 0;
-  border-radius: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
   overflow: hidden;
 }
 
 .powered-by a:hover {
   transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .powered-by img {
   display: block;
   height: 70px;
   width: auto;
-  mix-blend-mode: multiply;
+  filter: brightness(0) invert(1);
 }

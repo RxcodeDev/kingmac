@@ -2,7 +2,7 @@
   Nav fallback items — shown when no nav blocks are configured in the customizer.
   Defined once here to avoid duplication between desktop and mobile navs.
 {%- endcomment -%}
-{%- assign nav_fallback_items = 'TODOS LOS PRODUCTOS,LABORATORIO,EQUIPO,INSTRUMENTAL,PRACTICA,ORTODONCIA,UNIDADES,MAYOREO,LO MÁS VENDIDO,ZONA DE REMATES' | split: ',' -%}
+{%- assign nav_fallback_items = 'TODOS LOS PRODUCTOS,LABORATORIO,EQUIPO,INSTRUMENTAL,PRACTICA,ORTODONCIA,UNIDADES,MAYOREO' | split: ',' -%}
 
 <header class="site-header" role="banner">
 
@@ -299,9 +299,7 @@
       { "type": "nav_item", "settings": { "label": "PRACTICA" } },
       { "type": "nav_item", "settings": { "label": "ORTODONCIA" } },
       { "type": "nav_item", "settings": { "label": "UNIDADES" } },
-      { "type": "nav_item", "settings": { "label": "MAYOREO" } },
-      { "type": "nav_item", "settings": { "label": "LO MÁS VENDIDO", "link_url": "/collections/lo-mas-vendido" } },
-      { "type": "nav_item", "settings": { "label": "ZONA DE REMATES", "link_url": "/collections/zona-de-remates" } }
+      { "type": "nav_item", "settings": { "label": "MAYOREO" } }
     ]
   }
 }
