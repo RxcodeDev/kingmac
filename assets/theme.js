@@ -813,13 +813,20 @@ const RandomProductGrid = (() => {
     const usedHandles = new Set();
 
     $$('.js-random-grid').forEach(grid => {
-      // Si es un carrusel, mostrar TODOS los productos sin filtrar
+      // Si es un carrusel, mostrar TODOS los productos pero evitar duplicados entre carruseles
       const isCarousel = grid.classList.contains('product-carousel');
       
       if (isCarousel) {
-        // Para carruseles: mostrar todos los productos
+        // Para carruseles: mostrar todos los productos sin filtrar duplicados
         const cards = [...grid.querySelectorAll('.product-card')];
-        cards.forEach(card => card.classList.add('product-card--visible'));
+        cards.forEach(card => {
+          const handle = card.dataset.handle || '';
+          // Solo mostrar si no ha sido usado en otro carrusel
+          if (!usedHandles.has(handle)) {
+            card.classList.add('product-card--visible');
+            if (handle) usedHandles.add(handle);
+          }
+        });
         return;
       }
       
