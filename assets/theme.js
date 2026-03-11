@@ -813,6 +813,17 @@ const RandomProductGrid = (() => {
     const usedHandles = new Set();
 
     $$('.js-random-grid').forEach(grid => {
+      // Si es un carrusel, mostrar TODOS los productos sin filtrar
+      const isCarousel = grid.classList.contains('product-carousel');
+      
+      if (isCarousel) {
+        // Para carruseles: mostrar todos los productos
+        const cards = [...grid.querySelectorAll('.product-card')];
+        cards.forEach(card => card.classList.add('product-card--visible'));
+        return;
+      }
+      
+      // Para grids normales: selección aleatoria limitada
       const count = parseInt(grid.dataset.randomCount, 10) || 5;
       const cards = [...grid.querySelectorAll('.product-card')];
       if (!cards.length) return;
@@ -930,61 +941,79 @@ const ProductCarousel = (() => {
       
       if (!carousel || !prevBtn || !nextBtn) return;
       
-      const visibleCount = parseInt(carousel.dataset.visibleCount) || 5;
+      // Esperar a que los productos estén visibles
+      setTimeout(() => {
+        setupCarousel(carousel, prevBtn, nextBtn);
+      }, 100);
+    });
+  }
+  
+  function setupCarousel(carousel, prevBtn, nextBtn) {
+    const cards = carousel.querySelectorAll('.product-card--visible');
+    if (cards.length === 0) return;
+    
+    let currentIndex = 0;
+    const totalCards = cards.length;
+    
+    function updateScroll() {
+      const cardWidth = cards[0]?.offsetWidth || 200;
+      const gap = 28;
+      const scrollAmount = cardWidth + gap;
+      const targetScroll = currentIndex * scrollAmount;
       
-      function scroll(direction) {
-        const cardWidth = carousel.querySelector('.product-card')?.offsetWidth || 200;
-        const gap = 28;
-        const scrollAmount = (cardWidth + gap) * visibleCount;
-        
-        if (direction === 'next') {
-          carousel.scrollLeft += scrollAmount;
-        } else {
-          carousel.scrollLeft -= scrollAmount;
-        }
-        
-        // Loop infinito: si llegamos al final, volver al inicio
-        setTimeout(() => {
-          if (direction === 'next' && carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
-            carousel.scrollTo({ left: 0, behavior: 'smooth' });
-          } else if (direction === 'prev' && carousel.scrollLeft <= 10) {
-            carousel.scrollTo({ left: carousel.scrollWidth, behavior: 'smooth' });
-          }
-        }, 300);
+      carousel.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    }
+    
+    function scrollNext() {
+      currentIndex++;
+      if (currentIndex >= totalCards) {
+        currentIndex = 0; // Loop infinito
       }
-      
-      prevBtn.addEventListener('click', () => scroll('prev'));
-      nextBtn.addEventListener('click', () => scroll('next'));
-      
-      // Soporte para arrastre táctil
-      let isDown = false;
-      let startX;
-      let scrollLeftStart;
-      
-      carousel.addEventListener('mousedown', (e) => {
-        isDown = true;
-        carousel.style.cursor = 'grabbing';
-        startX = e.pageX - carousel.offsetLeft;
-        scrollLeftStart = carousel.scrollLeft;
-      });
-      
-      carousel.addEventListener('mouseleave', () => {
-        isDown = false;
-        carousel.style.cursor = 'grab';
-      });
-      
-      carousel.addEventListener('mouseup', () => {
-        isDown = false;
-        carousel.style.cursor = 'grab';
-      });
-      
-      carousel.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - carousel.offsetLeft;
-        const walk = (x - startX) * 2;
-        carousel.scrollLeft = scrollLeftStart - walk;
-      });
+      updateScroll();
+    }
+    
+    function scrollPrev() {
+      currentIndex--;
+      if (currentIndex < 0) {
+        currentIndex = totalCards - 1; // Loop infinito
+      }
+      updateScroll();
+    }
+    
+    prevBtn.addEventListener('click', scrollPrev);
+    nextBtn.addEventListener('click', scrollNext);
+    
+    // Soporte para arrastre con mouse
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    
+    carousel.addEventListener('mousedown', (e) => {
+      isDown = true;
+      carousel.style.cursor = 'grabbing';
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+      isDown = false;
+      carousel.style.cursor = 'grab';
+    });
+    
+    carousel.addEventListener('mouseup', () => {
+      isDown = false;
+      carousel.style.cursor = 'grab';
+    });
+    
+    carousel.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 2;
+      carousel.scrollLeft = scrollLeft - walk;
     });
   }
 
