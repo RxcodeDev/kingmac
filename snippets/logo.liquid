@@ -12,7 +12,7 @@
 {%- assign _height  = logo_height  | default: 46 -%}
 {%- assign _variant = logo_variant | default: 'white' -%}
 {%- assign _loading = logo_loading | default: 'lazy' -%}
-{%- assign _fallback_src = 'images/logos/' | append: _variant | append: '.png' | asset_url -%}
+{%- assign _fallback_src = 'logo-' | append: _variant | append: '.png' | asset_url -%}
 
 {%- if logo_image != blank -%}
   <img

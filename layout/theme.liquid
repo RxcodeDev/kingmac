@@ -34,7 +34,7 @@
   {%- if settings.favicon != blank -%}
     <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
   {%- else -%}
-    <link rel="icon" type="image/png" href="{{ 'images/icons/icon.png' | asset_url }}">
+    <link rel="icon" type="image/png" href="{{ 'icon-default.png' | asset_url }}">
   {%- endif -%}
 
   <!-- Google Fonts -->

@@ -17,7 +17,7 @@
     </div>
 
     <!-- Catalog Grid -->
-    {%- assign fallback_covers = 'images/icons/catEquipos.png,images/icons/catMateriales.png,images/icons/catProtecion.png,images/icons/catLab.png' | split: ',' -%}
+    {%- assign fallback_covers = 'icon-cat-equipos.png,icon-cat-materiales.png,icon-cat-protecion.png,icon-cat-lab.png' | split: ',' -%}
     <div class="catalogs-grid" role="list">
       {%- for block in section.blocks -%}
         {%- assign fallback_img = fallback_covers[forloop.index0] -%}
@@ -63,7 +63,7 @@
         </a>
 
       {%- else -%}
-        {%- assign catalog_covers = 'images/icons/catEquipos.png,images/icons/catLab.png,images/icons/catMateriales.png,images/icons/catProtecion.png' | split: ',' -%}
+        {%- assign catalog_covers = 'icon-cat-equipos.png,icon-cat-lab.png,icon-cat-materiales.png,icon-cat-protecion.png' | split: ',' -%}
         {%- assign catalog_titles = 'Equipos 2026,Laboratorio 2026,Materiales 2026,Protección 2026' | split: ',' -%}
         {%- for i in (0..3) -%}
           <div class="catalog-card" role="listitem">

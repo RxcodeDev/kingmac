@@ -83,7 +83,7 @@
   top: -12%;        /* extra room above */
   height: 124%;     /* extra room below */
   pointer-events: none;
-  background-image: url('images/wallpapers/showder.png'); /* default fallback */
+  background-image: url('wallpaper-showder.png'); /* default fallback */
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
