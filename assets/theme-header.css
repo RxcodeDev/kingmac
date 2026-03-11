@@ -356,6 +356,102 @@
   background: rgba(255,255,255,0.05);
 }
 
+/* ─── MOBILE NAV HORIZONTAL (mobile only) ───────────────────────────────── */
+.mobile-nav-horizontal {
+  display: none;
+  background: var(--color-nav-bg);
+  width: 100%;
+  padding: 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Gradient indicators for scroll hints */
+.mobile-nav-horizontal::before,
+.mobile-nav-horizontal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mobile-nav-horizontal::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(232, 119, 34, 0.95), transparent);
+}
+
+.mobile-nav-horizontal::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(232, 119, 34, 0.95), transparent);
+}
+
+.mobile-nav-horizontal__scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 10px 12px;
+  scroll-behavior: smooth;
+}
+
+.mobile-nav-horizontal__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-nav-horizontal__list {
+  display: flex;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.mobile-nav-horizontal__item {
+  flex-shrink: 0;
+}
+
+.mobile-nav-horizontal__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 18px;
+  color: #000000;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.mobile-nav-horizontal__item.active .mobile-nav-horizontal__link {
+  background: var(--color-background);
+  color: #000000;
+  font-weight: 900;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-nav-horizontal__link:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+}
+
+.mobile-nav-horizontal__item.active .mobile-nav-horizontal__link:hover {
+  background: var(--color-background);
+  transform: translateY(-2px);
+}
+
 /* ─── SEARCH TOGGLE (mobile only) ───────────────────────────────────────── */
 .search-toggle {
   display: none;

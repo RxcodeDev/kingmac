@@ -1,3 +1,4 @@
+
 # 🗺️ SKILL MAESTRO — Mapa de Contexto del Proyecto
 
 > **Cómo usar este archivo con IA:**

@@ -52,6 +52,7 @@
 }
 
 .shipping-section {
+  padding-top: var(--spacing-xxl);
   padding-bottom: var(--spacing-xxl);
 }
 

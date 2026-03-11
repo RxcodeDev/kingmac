@@ -7,6 +7,7 @@
           "type": "slide",
           "settings": {
             "asset_image": "bane_001.png",
+            "asset_image_mobile": "bane_001_movil.png",
             "title": "Bienvenido a Kingden",
             "subtitle": "Equipos y materiales dentales de alta calidad",
             "button_label": "Ver Catálogo",
@@ -17,6 +18,7 @@
           "type": "slide",
           "settings": {
             "asset_image": "bane_002.png",
+            "asset_image_mobile": "bane_002_movil.png",
             "title": "Unidades Dentales",
             "subtitle": "Calidad profesional, financiamiento disponible y entrega rápida.",
             "button_label": "Ver Modelos",
@@ -35,29 +37,6 @@
         "title": "LO MÁS VENDIDO",
         "products_to_show": 5
       }
-    },
-    "featured_banners": {
-      "type": "featured-banner",
-      "blocks": {
-        "banner_1": {
-          "type": "banner",
-          "settings": {
-            "text": "RESALTAR OFERTA",
-            "bg_color": "#000000",
-            "text_color": "#FFFFFF"
-          }
-        },
-        "banner_2": {
-          "type": "banner",
-          "settings": {
-            "text": "RESALTAR OFERTA",
-            "bg_color": "#000000",
-            "text_color": "#FFFFFF"
-          }
-        }
-      },
-      "block_order": ["banner_1", "banner_2"],
-      "settings": {}
     },
     "envios_section": {
       "type": "shipping-section",
@@ -113,7 +92,9 @@
           "settings": {
             "title": "ZONA DE REMATES",
             "cta": "COMPRAR",
-            "bg_color": "#1B2A4A",
+            "url": "/collections/zona-de-remates",
+            "asset_image": "promo-remates.png",
+            "bg_color": "#1B6CB3",
             "title_color": "#FFFFFF"
           }
         },
@@ -122,7 +103,9 @@
           "settings": {
             "title": "LO MÁS VENDIDO",
             "cta": "COMPRAR",
-            "bg_color": "#1B2A4A",
+            "url": "/collections/lo-mas-vendido",
+            "asset_image": "promo-vendidos.png",
+            "bg_color": "#E87722",
             "title_color": "#FFFFFF"
           }
         }
@@ -161,7 +144,6 @@
   "order": [
     "hero_slideshow",
     "productos_mas_vendidos",
-    "featured_banners",
     "envios_section",
     "marquee",
     "content_highlight",

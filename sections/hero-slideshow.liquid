@@ -9,9 +9,10 @@
     {%- for block in section.blocks -%}
       <div class="hero-slide" role="listitem" {{ block.shopify_attributes }}>
 
+        {%- comment -%} Desktop Image (landscape) {%- endcomment -%}
         {%- if block.settings.image != blank -%}
           <img
-            class="hero-slide__img"
+            class="hero-slide__img hero-slide__img--desktop"
             src="{{ block.settings.image | img_url: '1600x' }}"
             srcset="{{ block.settings.image | img_url: '800x' }} 800w,
                     {{ block.settings.image | img_url: '1200x' }} 1200w,
@@ -22,12 +23,54 @@
           >
         {%- elsif block.settings.asset_image != blank -%}
           <img
-            class="hero-slide__img"
+            class="hero-slide__img hero-slide__img--desktop"
             src="{{ block.settings.asset_image | asset_url }}"
             alt="{{ block.settings.title | escape }}"
             loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
           >
-        {%- else -%}
+        {%- endif -%}
+
+        {%- comment -%} Mobile Image (portrait) - con fallback a desktop {%- endcomment -%}
+        {%- if block.settings.image_mobile != blank -%}
+          <img
+            class="hero-slide__img hero-slide__img--mobile"
+            src="{{ block.settings.image_mobile | img_url: '800x' }}"
+            srcset="{{ block.settings.image_mobile | img_url: '600x' }} 600w,
+                    {{ block.settings.image_mobile | img_url: '800x' }} 800w"
+            sizes="100vw"
+            alt="{{ block.settings.image_mobile.alt | escape | default: block.settings.title }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          >
+        {%- elsif block.settings.asset_image_mobile != blank -%}
+          <img
+            class="hero-slide__img hero-slide__img--mobile"
+            src="{{ block.settings.asset_image_mobile | asset_url }}"
+            alt="{{ block.settings.title | escape }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          >
+        {%- elsif block.settings.image != blank -%}
+          {%- comment -%} Fallback: usar imagen desktop si no hay mobile {%- endcomment -%}
+          <img
+            class="hero-slide__img hero-slide__img--mobile"
+            src="{{ block.settings.image | img_url: '800x' }}"
+            srcset="{{ block.settings.image | img_url: '600x' }} 600w,
+                    {{ block.settings.image | img_url: '800x' }} 800w"
+            sizes="100vw"
+            alt="{{ block.settings.image.alt | escape | default: block.settings.title }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          >
+        {%- elsif block.settings.asset_image != blank -%}
+          {%- comment -%} Fallback: usar asset desktop si no hay mobile {%- endcomment -%}
+          <img
+            class="hero-slide__img hero-slide__img--mobile"
+            src="{{ block.settings.asset_image | asset_url }}"
+            alt="{{ block.settings.title | escape }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          >
+        {%- endif -%}
+
+        {%- comment -%} Fallback placeholder if no images {%- endcomment -%}
+        {%- if block.settings.image == blank and block.settings.asset_image == blank and block.settings.image_mobile == blank and block.settings.asset_image_mobile == blank -%}
           <div class="hero-placeholder">
             {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
           </div>
@@ -91,15 +134,38 @@
       "name": "Diapositiva",
       "settings": [
         {
+          "type": "header",
+          "content": "Imagen Desktop (horizontal/landscape)"
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Imagen"
+          "label": "Imagen Desktop"
         },
         {
           "type": "text",
           "id": "asset_image",
-          "label": "Imagen local (nombre de archivo en assets)",
-          "info": "Ej: images/wallpapers/bane_001.png"
+          "label": "Imagen Desktop local (assets)",
+          "info": "Ej: images/wallpapers/bane_desktop.png"
+        },
+        {
+          "type": "header",
+          "content": "Imagen Mobile (vertical/portrait)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Imagen Mobile"
+        },
+        {
+          "type": "text",
+          "id": "asset_image_mobile",
+          "label": "Imagen Mobile local (assets)",
+          "info": "Ej: images/wallpapers/bane_mobile.png"
+        },
+        {
+          "type": "header",
+          "content": "Contenido del slide"
         },
         {
           "type": "text",

@@ -99,3 +99,38 @@
   font-size: 1rem;
   color: rgba(255,255,255,0.9);
 }
+
+/* Powered by RecTrack */
+.powered-by {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: var(--spacing-md);
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.95);
+  font-weight: 500;
+}
+
+.powered-by a {
+  display: inline-flex;
+  align-items: center;
+  transition: transform var(--transition);
+  text-decoration: none;
+  background: white;
+  padding: 0;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.powered-by a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.powered-by img {
+  display: block;
+  height: 70px;
+  width: auto;
+}

@@ -215,6 +215,12 @@ button, input, select, textarea {
   flex-direction: column;
   gap: 14px;
   z-index: 9999;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.float-contact.is-hidden {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .float-contact__btn {

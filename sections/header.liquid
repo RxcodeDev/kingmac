@@ -2,7 +2,7 @@
   Nav fallback items — shown when no nav blocks are configured in the customizer.
   Defined once here to avoid duplication between desktop and mobile navs.
 {%- endcomment -%}
-{%- assign nav_fallback_items = 'LABORATORIO,EQUIPO,INSTRUMENTAL,PRACTICA,ORTODONCIA,UNIDADES,MAYOREO' | split: ',' -%}
+{%- assign nav_fallback_items = 'TODOS LOS PRODUCTOS,LABORATORIO,EQUIPO,INSTRUMENTAL,PRACTICA,ORTODONCIA,UNIDADES,MAYOREO,LO MÁS VENDIDO,ZONA DE REMATES' | split: ',' -%}
 
 <header class="site-header" role="banner">
 
@@ -106,29 +106,44 @@
   <nav class="site-nav" aria-label="Navegación principal">
     <div class="site-nav__inner">
       <ul class="site-nav__list" role="list">
+        {%- comment -%} Siempre mostrar TODOS LOS PRODUCTOS como primer elemento {%- endcomment -%}
+        {%- assign all_active = false -%}
+        {%- if request.page_type == 'collection' and collection.handle == 'all' -%}
+          {%- assign all_active = true -%}
+        {%- endif -%}
+        <li class="site-nav__item{% if all_active %} active{% endif %}">
+          <a class="site-nav__link" href="/collections/all">TODOS LOS PRODUCTOS</a>
+        </li>
         {%- for block in section.blocks -%}
           {%- if block.type == 'nav_item' -%}
-            {%- assign nav_href = block.settings.link_url -%}
-            {%- if nav_href == blank -%}
-              {%- assign nav_href = '/collections/' | append: block.settings.label | downcase | replace: ' ', '-' -%}
-            {%- endif -%}
-            {%- assign nav_handle = nav_href | split: '/' | last -%}
-            {%- assign is_active = false -%}
-            {%- if request.page_type == 'collection' and collection.handle == nav_handle -%}
-              {%- assign is_active = true -%}
-            {%- endif -%}
-            <li class="site-nav__item{% if is_active %} active{% endif %}" {{ block.shopify_attributes }}>
-              <a class="site-nav__link" href="{{ nav_href }}">
-                {{ block.settings.label }}
-              </a>
-            </li>
+            {%- comment -%} Saltar TODOS LOS PRODUCTOS ya que está hardcodeado arriba {%- endcomment -%}
+            {%- unless block.settings.label == 'TODOS LOS PRODUCTOS' -%}
+              {%- assign nav_href = block.settings.link_url -%}
+              {%- if nav_href == blank -%}
+                {%- assign nav_href = '/collections/' | append: block.settings.label | downcase | replace: ' ', '-' -%}
+              {%- endif -%}
+              {%- assign nav_handle = nav_href | split: '/' | last -%}
+              {%- assign is_active = false -%}
+              {%- if request.page_type == 'collection' and collection.handle == nav_handle -%}
+                {%- assign is_active = true -%}
+              {%- endif -%}
+              <li class="site-nav__item{% if is_active %} active{% endif %}" {{ block.shopify_attributes }}>
+                <a class="site-nav__link" href="{{ nav_href }}">
+                  {{ block.settings.label }}
+                </a>
+              </li>
+            {%- endunless -%}
           {%- endif -%}
         {%- endfor -%}
 
         {%- comment -%} Fallback si no hay bloques configurados {%- endcomment -%}
         {%- if section.blocks.size == 0 -%}
           {%- for item in nav_fallback_items -%}
-            {%- assign item_handle = item | downcase -%}
+            {%- if item == 'TODOS LOS PRODUCTOS' -%}
+              {%- assign item_handle = 'all' -%}
+            {%- else -%}
+              {%- assign item_handle = item | downcase | replace: ' ', '-' | replace: 'á', 'a' | replace: 'é', 'e' | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'ú', 'u' -%}
+            {%- endif -%}
             {%- assign fallback_active = false -%}
             {%- if request.page_type == 'collection' and collection.handle == item_handle -%}
               {%- assign fallback_active = true -%}
@@ -142,25 +157,90 @@
     </div>
   </nav>
 
-  <!-- Menú móvil -->
+  <!-- ══ MENÚ MÓVIL HORIZONTAL (visible solo en móvil) ══ -->
+  <nav class="mobile-nav-horizontal" aria-label="Navegación móvil">
+    <div class="mobile-nav-horizontal__scroll">
+      <ul class="mobile-nav-horizontal__list" role="list">
+        {%- comment -%} Siempre mostrar TODOS LOS PRODUCTOS como primer elemento {%- endcomment -%}
+        {%- assign all_h_active = false -%}
+        {%- if request.page_type == 'collection' and collection.handle == 'all' -%}
+          {%- assign all_h_active = true -%}
+        {%- endif -%}
+        <li class="mobile-nav-horizontal__item{% if all_h_active %} active{% endif %}">
+          <a class="mobile-nav-horizontal__link" href="/collections/all">TODOS LOS PRODUCTOS</a>
+        </li>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'nav_item' -%}
+            {%- comment -%} Saltar TODOS LOS PRODUCTOS ya que está hardcodeado arriba {%- endcomment -%}
+            {%- unless block.settings.label == 'TODOS LOS PRODUCTOS' -%}
+              {%- assign mob_h_href = block.settings.link_url -%}
+              {%- if mob_h_href == blank -%}
+                {%- assign mob_h_href = '/collections/' | append: block.settings.label | downcase | replace: ' ', '-' -%}
+              {%- endif -%}
+              {%- assign mob_h_handle = mob_h_href | split: '/' | last -%}
+              {%- assign mob_h_active = false -%}
+              {%- if request.page_type == 'collection' and collection.handle == mob_h_handle -%}
+                {%- assign mob_h_active = true -%}
+              {%- endif -%}
+              <li class="mobile-nav-horizontal__item{% if mob_h_active %} active{% endif %}">
+                <a class="mobile-nav-horizontal__link" href="{{ mob_h_href }}">
+                  {{ block.settings.label }}
+                </a>
+              </li>
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- comment -%} Fallback si no hay bloques configurados {%- endcomment -%}
+        {%- if section.blocks.size == 0 -%}
+          {%- for item in nav_fallback_items -%}
+            {%- if item == 'TODOS LOS PRODUCTOS' -%}
+              {%- assign item_h_handle = 'all' -%}
+            {%- else -%}
+              {%- assign item_h_handle = item | downcase | replace: ' ', '-' | replace: 'á', 'a' | replace: 'é', 'e' | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'ú', 'u' -%}
+            {%- endif -%}
+            {%- assign fallback_h_active = false -%}
+            {%- if request.page_type == 'collection' and collection.handle == item_h_handle -%}
+              {%- assign fallback_h_active = true -%}
+            {%- endif -%}
+            <li class="mobile-nav-horizontal__item{% if fallback_h_active %} active{% endif %}">
+              <a class="mobile-nav-horizontal__link" href="/collections/{{ item_h_handle }}">{{ item }}</a>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Menú móvil (drawer lateral - OBSOLETO, mantenido para compatibilidad) -->
   <nav class="mobile-nav" id="mobile-nav" aria-label="Menú móvil">
     <ul class="mobile-nav__list" role="list">
+      {%- comment -%} Siempre mostrar TODOS LOS PRODUCTOS como primer elemento {%- endcomment -%}
+      <li><a class="mobile-nav__link" href="/collections/all">TODOS LOS PRODUCTOS</a></li>
       {%- for block in section.blocks -%}
         {%- if block.type == 'nav_item' -%}
-          {%- assign mob_href = block.settings.link_url -%}
-          {%- if mob_href == blank -%}
-            {%- assign mob_href = '/collections/' | append: block.settings.label | downcase | replace: ' ', '-' -%}
-          {%- endif -%}
-          <li>
-            <a class="mobile-nav__link" href="{{ mob_href }}">
-              {{ block.settings.label }}
-            </a>
-          </li>
+          {%- comment -%} Saltar TODOS LOS PRODUCTOS ya que está hardcodeado arriba {%- endcomment -%}
+          {%- unless block.settings.label == 'TODOS LOS PRODUCTOS' -%}
+            {%- assign mob_href = block.settings.link_url -%}
+            {%- if mob_href == blank -%}
+              {%- assign mob_href = '/collections/' | append: block.settings.label | downcase | replace: ' ', '-' -%}
+            {%- endif -%}
+            <li>
+              <a class="mobile-nav__link" href="{{ mob_href }}">
+                {{ block.settings.label }}
+              </a>
+            </li>
+          {%- endunless -%}
         {%- endif -%}
       {%- endfor -%}
       {%- if section.blocks.size == 0 -%}
         {%- for item in nav_fallback_items -%}
-          <li><a class="mobile-nav__link" href="/collections/{{ item | downcase }}">{{ item }}</a></li>
+          {%- if item == 'TODOS LOS PRODUCTOS' -%}
+            {%- assign item_mob_handle = 'all' -%}
+          {%- else -%}
+            {%- assign item_mob_handle = item | downcase | replace: ' ', '-' | replace: 'á', 'a' | replace: 'é', 'e' | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'ú', 'u' -%}
+          {%- endif -%}
+          <li><a class="mobile-nav__link" href="/collections/{{ item_mob_handle }}">{{ item }}</a></li>
         {%- endfor -%}
       {%- endif -%}
     </ul>
@@ -212,13 +292,16 @@
   ],
   "default": {
     "blocks": [
+      { "type": "nav_item", "settings": { "label": "TODOS LOS PRODUCTOS", "link_url": "/collections/all" } },
       { "type": "nav_item", "settings": { "label": "LABORATORIO", "active": true } },
       { "type": "nav_item", "settings": { "label": "EQUIPO" } },
       { "type": "nav_item", "settings": { "label": "INSTRUMENTAL" } },
       { "type": "nav_item", "settings": { "label": "PRACTICA" } },
       { "type": "nav_item", "settings": { "label": "ORTODONCIA" } },
       { "type": "nav_item", "settings": { "label": "UNIDADES" } },
-      { "type": "nav_item", "settings": { "label": "MAYOREO" } }
+      { "type": "nav_item", "settings": { "label": "MAYOREO" } },
+      { "type": "nav_item", "settings": { "label": "LO MÁS VENDIDO", "link_url": "/collections/lo-mas-vendido" } },
+      { "type": "nav_item", "settings": { "label": "ZONA DE REMATES", "link_url": "/collections/zona-de-remates" } }
     ]
   }
 }

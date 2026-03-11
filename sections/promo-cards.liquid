@@ -1,33 +1,38 @@
 <section class="promo-cards">
   <div class="promo-cards__inner">
     {%- for block in section.blocks -%}
+      {%- liquid
+        assign bg_style = ''
+        if block.settings.bg_image != blank
+          assign bg_style = 'background-image: url(' | append: block.settings.bg_image | append: '); background-size: cover; background-position: center;'
+        elsif block.settings.asset_image != blank
+          assign image_url = block.settings.asset_image | asset_url
+          assign bg_style = 'background-image: url(' | append: image_url | append: '); background-size: cover; background-position: center;'
+        else
+          assign bg_style = 'background-color: ' | append: block.settings.bg_color | append: ';'
+        endif
+      -%}
       <a
         href="{{ block.settings.url | default: '#' }}"
         class="promo-card"
-        style="background-color: {{ block.settings.bg_color | default: '#000000' }};"
+        style="{{ bg_style }}"
         {{ block.shopify_attributes }}
       >
-        <div class="promo-card__body">
-          <p class="promo-card__title" style="color: {{ block.settings.title_color | default: '#FFFFFF' }};">
-            {{ block.settings.title | default: 'TÍTULO' }}
-          </p>
-          <span class="promo-card__cta" style="color: {{ block.settings.title_color | default: '#FFFFFF' }};">
-            {{ block.settings.cta | default: 'COMPRAR' }}
-          </span>
-        </div>
+        {%- unless block.settings.bg_image != blank or block.settings.asset_image != blank -%}
+          <div class="promo-card__body">
+            <p class="promo-card__title" style="color: {{ block.settings.title_color | default: '#FFFFFF' }};">
+              {{ block.settings.title | default: 'TÍTULO' }}
+            </p>
+            <span class="promo-card__cta" style="color: {{ block.settings.title_color | default: '#FFFFFF' }};">
+              {{ block.settings.cta | default: 'COMPRAR' }}
+            </span>
+          </div>
+        {%- endunless -%}
       </a>
     {%- else -%}
-      <a href="#" class="promo-card" style="background-color: #000000;">
-        <div class="promo-card__body">
-          <p class="promo-card__title">ZONA DE REMATES</p>
-          <span class="promo-card__cta">COMPRAR</span>
-        </div>
+      <a href="#" class="promo-card" style="background-image: url({{ 'promo-remates.png' | asset_url }}); background-size: cover; background-position: center;">
       </a>
-      <a href="#" class="promo-card" style="background-color: #000000;">
-        <div class="promo-card__body">
-          <p class="promo-card__title">LO MÁS VENDIDO</p>
-          <span class="promo-card__cta">COMPRAR</span>
-        </div>
+      <a href="#" class="promo-card" style="background-image: url({{ 'promo-vendidos.png' | asset_url }}); background-size: cover; background-position: center;">
       </a>
     {%- endfor -%}
   </div>
@@ -62,16 +67,27 @@
           "label": "Enlace"
         },
         {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "Imagen de fondo (externa)"
+        },
+        {
+          "type": "text",
+          "id": "asset_image",
+          "label": "Imagen de fondo (archivo en assets/)",
+          "info": "Nombre del archivo, ej: promo-remates.png"
+        },
+        {
           "type": "color",
           "id": "bg_color",
-          "label": "Color de fondo",
+          "label": "Color de fondo (si no hay imagen)",
           "default": "#000000"
         },
         {
           "type": "color",
           "id": "title_color",
           "label": "Color del texto",
-          "default": "#000000"
+          "default": "#FFFFFF"
         }
       ]
     }
@@ -85,8 +101,9 @@
           "settings": {
             "title": "ZONA DE REMATES",
             "cta": "COMPRAR",
-            "bg_color": "#000000",
-            "title_color": "#000000"
+            "asset_image": "promo-remates.png",
+            "bg_color": "#1B6CB3",
+            "title_color": "#FFFFFF"
           }
         },
         {
@@ -94,8 +111,9 @@
           "settings": {
             "title": "LO MÁS VENDIDO",
             "cta": "COMPRAR",
-            "bg_color": "#000000",
-            "title_color": "#000000"
+            "asset_image": "promo-vendidos.png",
+            "bg_color": "#E87722",
+            "title_color": "#FFFFFF"
           }
         }
       ]

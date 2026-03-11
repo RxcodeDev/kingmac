@@ -32,6 +32,11 @@ const Cart = (() => {
     cartOverlay.classList.add('is-visible');
     cartOverlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    
+    // Ocultar botones flotantes
+    const floatContact = $('.float-contact');
+    if (floatContact) floatContact.classList.add('is-hidden');
+    
     renderCart();
   }
 
@@ -41,6 +46,10 @@ const Cart = (() => {
     cartOverlay.classList.remove('is-visible');
     cartOverlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    
+    // Mostrar botones flotantes
+    const floatContact = $('.float-contact');
+    if (floatContact) floatContact.classList.remove('is-hidden');
   }
 
   function showToast(message, duration = 2800) {
@@ -825,11 +834,96 @@ const RandomProductGrid = (() => {
   return { init };
 })();
 
+/* ─── MOBILE NAV HORIZONTAL AUTO-SCROLL ─────────────────────────────────── */
+const MobileNavAutoScroll = (() => {
+  function init() {
+    const navScroll = $('.mobile-nav-horizontal__scroll');
+    if (!navScroll) return;
+
+    // Don't auto-scroll if we're already on a collection/category page
+    const isCollectionPage = document.body.classList.contains('template-collection') || 
+                             window.location.pathname.includes('/collections/');
+    
+    let autoScrollInterval = null;
+    let shouldScroll = !isCollectionPage; // Don't scroll if already in a section
+
+    function startAutoScroll() {
+      if (!shouldScroll || autoScrollInterval) return;
+      
+      autoScrollInterval = setInterval(() => {
+        if (!shouldScroll) {
+          clearInterval(autoScrollInterval);
+          autoScrollInterval = null;
+          return;
+        }
+
+        // Move left to right
+        navScroll.scrollLeft += 1.5;
+        
+        // If reached end, restart from beginning
+        const maxScroll = navScroll.scrollWidth - navScroll.clientWidth;
+        if (navScroll.scrollLeft >= maxScroll - 5) {
+          navScroll.scrollLeft = 0;
+        }
+      }, 30);
+    }
+
+    function stopAutoScroll() {
+      shouldScroll = false;
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
+    }
+
+    // Handle link clicks
+    const navLinks = $$('.mobile-nav-horizontal__link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        // Don't prevent default - allow navigation to work
+        
+        // STOP scrolling permanently when a category is selected
+        stopAutoScroll();
+        
+        // Remove active class from all items
+        $$('.mobile-nav-horizontal__item').forEach(item => {
+          item.classList.remove('active');
+        });
+        
+        // Add active to clicked item
+        const parentItem = this.closest('.mobile-nav-horizontal__item');
+        if (parentItem) {
+          parentItem.classList.add('active');
+        }
+        
+        // Center the selected item
+        this.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      });
+    });
+
+    // Only start auto-scroll on home page, not on collection pages
+    if (!isCollectionPage) {
+      setTimeout(() => {
+        if (shouldScroll) {
+          startAutoScroll();
+        }
+      }, 1000);
+    }
+
+    // Stop on any user interaction
+    navScroll.addEventListener('touchstart', stopAutoScroll, { passive: true });
+    navScroll.addEventListener('mousedown', stopAutoScroll);
+  }
+
+  return { init };
+})();
+
 /* ─── INIT ───────────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   Cart.init();
   HeroSlideshow.init();
   MobileNav.init();
+  MobileNavAutoScroll.init();
   SearchForm.init();
   SearchToggle.init();
   AnnouncementRotator.init();
