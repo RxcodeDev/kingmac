@@ -808,29 +808,47 @@ const RandomProductGrid = (() => {
   }
 
   function init() {
-    // Shared set across all grids on the page — prevents the same product
-    // appearing in more than one random section per load.
-    const usedHandles = new Set();
-
-    $$('.js-random-grid').forEach(grid => {
-      // Si es un carrusel, mostrar TODOS los productos pero evitar duplicados entre carruseles
-      const isCarousel = grid.classList.contains('product-carousel');
+    // Primero procesar todos los carruseles juntos
+    const carousels = $$('.js-random-grid.product-carousel');
+    
+    if (carousels.length > 0) {
+      // Recolectar todos los productos únicos de todos los carruseles
+      const allProducts = new Map(); // handle -> card element de referencia
       
-      if (isCarousel) {
-        // Para carruseles: mostrar todos los productos sin filtrar duplicados
-        const cards = [...grid.querySelectorAll('.product-card')];
+      carousels.forEach(carousel => {
+        const cards = carousel.querySelectorAll('.product-card');
         cards.forEach(card => {
-          const handle = card.dataset.handle || '';
-          // Solo mostrar si no ha sido usado en otro carrusel
-          if (!usedHandles.has(handle)) {
-            card.classList.add('product-card--visible');
-            if (handle) usedHandles.add(handle);
+          const handle = card.dataset.handle || Math.random().toString();
+          if (!allProducts.has(handle)) {
+            allProducts.set(handle, card);
           }
         });
-        return;
-      }
+      });
       
-      // Para grids normales: selección aleatoria limitada
+      // Mezclar los handles y dividir entre carruseles
+      const handles = shuffle([...allProducts.keys()]);
+      const productsPerCarousel = Math.ceil(handles.length / carousels.length);
+      
+      carousels.forEach((carousel, index) => {
+        const startIdx = index * productsPerCarousel;
+        const endIdx = startIdx + productsPerCarousel;
+        const assignedHandles = new Set(handles.slice(startIdx, endIdx));
+        
+        const cards = carousel.querySelectorAll('.product-card');
+        cards.forEach(card => {
+          const handle = card.dataset.handle || '';
+          if (assignedHandles.has(handle)) {
+            card.classList.add('product-card--visible');
+          }
+        });
+      });
+    }
+    
+    // Procesar grids normales (no carruseles) con la lógica original
+    const usedHandles = new Set();
+    $$('.js-random-grid').forEach(grid => {
+      if (grid.classList.contains('product-carousel')) return; // Ya procesado arriba
+      
       const count = parseInt(grid.dataset.randomCount, 10) || 5;
       const cards = [...grid.querySelectorAll('.product-card')];
       if (!cards.length) return;
