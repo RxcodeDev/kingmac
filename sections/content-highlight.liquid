@@ -17,7 +17,9 @@
   {%- assign _hl_product = section.settings.product -%}
 {%- endunless -%}
 
+{%- assign _is_real_product = false -%}
 {%- if _hl_product != blank -%}
+  {%- assign _is_real_product = true -%}
   {%- assign _hl_title       = _hl_product.title -%}
   {%- assign _hl_body        = _hl_product.description | strip_html | truncatewords: 40 -%}
   {%- assign _hl_variant     = _hl_product.first_available_variant | default: _hl_product.variants.first -%}
@@ -74,7 +76,13 @@
       {%- if _hl_price != blank -%}
         <div class="content-highlight__pricing">
           {%- if _hl_compare != blank and _hl_compare != 0 -%}
-            <s class="content-highlight__compare-price">{{ _hl_compare | money }}</s>
+            <s class="content-highlight__compare-price">
+              {%- if _is_real_product -%}
+                {{- _hl_compare | money -}}
+              {%- else -%}
+                {{- _hl_compare -}}
+              {%- endif -%}
+            </s>
             <span class="content-highlight__price-separator">&ndash;</span>
           {%- endif -%}
           <span class="content-highlight__price">{{ _hl_price }}</span>

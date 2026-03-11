@@ -50,12 +50,15 @@
     "content_highlight": {
       "type": "content-highlight",
       "settings": {
-        "product_handle": "kin-18n",
-        "title": "Destacar contenido",
-        "body_text": "Información de la oferta o texto de valor aquí",
-        "gradient_start": "#1B2A4A",
-        "gradient_mid": "#2e4a8a",
-        "gradient_end": "#E87722"
+        "product_handle": "",
+        "title": "UNIDADES DENTALES PREMIUM",
+        "body_text": "Equipamiento profesional con financiamiento disponible. Tecnología de última generación para tu consultorio dental.",
+        "body_text_2": "Calidad profesional, financiamiento disponible y entrega rápida.",
+        "compare_price": "$53,000.00",
+        "price": "$37,390.00",
+        "button_label": "MÁS INFORMACIÓN",
+        "button_url": "/collections/all",
+        "bg_color": "#f4f6f9"
       }
     },
     "marquee": {
