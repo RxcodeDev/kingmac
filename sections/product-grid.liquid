@@ -16,31 +16,49 @@
       </h2>
     {%- endif -%}
 
-    <div class="product-grid{% if _use_random %} js-random-grid{% endif %}"
-         {% if _use_random %}data-random-count="{{ section.settings.products_to_show }}"{% endif %}
-         role="list">
+    <div class="product-carousel-wrapper">
+      <!-- Botón navegación izquierda -->
+      <button class="carousel-nav carousel-nav--prev" aria-label="Anterior">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
 
-      {%- if _grid_products != blank -%}
+      <!-- Carrusel de productos -->
+      <div class="product-carousel{% if _use_random %} js-random-grid{% endif %}"
+           {% if _use_random %}data-random-count="{{ section.settings.products_to_show }}"{% endif %}
+           data-visible-count="5"
+           role="list">
 
-        {%- for product in _grid_products limit: 50 -%}
-          {%- if product.featured_image != blank -%}
-            {%- render 'product-card',
-              card_product: product,
-              card_section:  section,
-              show_compare:  true
-            -%}
-          {%- endif -%}
-        {%- endfor -%}
+        {%- if _grid_products != blank -%}
 
-      {%- else -%}
+          {%- for product in _grid_products -%}
+            {%- if product.featured_image != blank -%}
+              {%- render 'product-card',
+                card_product: product,
+                card_section:  section,
+                show_compare:  true
+              -%}
+            {%- endif -%}
+          {%- endfor -%}
 
-        {%- comment -%} Placeholder cards when no products exist {%- endcomment -%}
-        {%- for i in (1..5) -%}
-          {%- render 'product-card-placeholder', placeholder_index: i -%}
-        {%- endfor -%}
+        {%- else -%}
 
-      {%- endif -%}
-    </div><!-- /.product-grid -->
+          {%- comment -%} Placeholder cards when no products exist {%- endcomment -%}
+          {%- for i in (1..5) -%}
+            {%- render 'product-card-placeholder', placeholder_index: i -%}
+          {%- endfor -%}
+
+        {%- endif -%}
+      </div><!-- /.product-carousel -->
+
+      <!-- Botón navegación derecha -->
+      <button class="carousel-nav carousel-nav--next" aria-label="Siguiente">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    </div><!-- /.product-carousel-wrapper -->
 
   </div><!-- /.container -->
 </section>

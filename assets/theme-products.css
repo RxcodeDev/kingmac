@@ -1,5 +1,5 @@
 /* =============================================================================
-   KINGDEN — PRODUCT GRID & CARDS
+   KINGDEN — PRODUCT CAROUSEL & CARDS
    ============================================================================= */
 
 .product-grid-section {
@@ -19,6 +19,73 @@
   padding: 0 var(--spacing-md);
 }
 
+/* ─── CAROUSEL WRAPPER ────────────────────────────────────────────────────── */
+.product-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin-top: var(--spacing-lg);
+}
+
+/* ─── CAROUSEL NAVIGATION BUTTONS ─────────────────────────────────────────── */
+.carousel-nav {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.carousel-nav:hover {
+  background: var(--color-secondary);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.carousel-nav:active {
+  transform: scale(0.95);
+}
+
+.carousel-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.carousel-nav svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ─── PRODUCT CAROUSEL ─────────────────────────────────────────────────────── */
+.product-carousel {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  flex: 1;
+  padding: 8px 0;
+}
+
+.product-carousel::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
 /* ─── RANDOM PRODUCT POOL ────────────────────────────────────────────────── */
 /* All pool cards are hidden until JS picks and reveals the random selection */
 .js-random-grid > .product-card {
@@ -28,11 +95,12 @@
   display: flex;
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 28px;
-  width: 100%;
+/* ─── PRODUCT CARD IN CAROUSEL ─────────────────────────────────────────────── */
+.product-carousel > .product-card {
+  flex: 0 0 calc(20% - 22.4px); /* 5 cards visible (20% each, minus gap) */
+  min-width: 200px;
+  max-width: 280px;
+  scroll-snap-align: start;
 }
 
 /* ─── PRODUCT CARD ───────────────────────────────────────────────────────── */

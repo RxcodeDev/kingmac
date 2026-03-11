@@ -918,6 +918,79 @@ const MobileNavAutoScroll = (() => {
   return { init };
 })();
 
+/* ─── PRODUCT CAROUSEL ───────────────────────────────────────────────────── */
+const ProductCarousel = (() => {
+  function init() {
+    const wrappers = $$('.product-carousel-wrapper');
+    
+    wrappers.forEach(wrapper => {
+      const carousel = $('.product-carousel', wrapper);
+      const prevBtn = $('.carousel-nav--prev', wrapper);
+      const nextBtn = $('.carousel-nav--next', wrapper);
+      
+      if (!carousel || !prevBtn || !nextBtn) return;
+      
+      const visibleCount = parseInt(carousel.dataset.visibleCount) || 5;
+      
+      function scroll(direction) {
+        const cardWidth = carousel.querySelector('.product-card')?.offsetWidth || 200;
+        const gap = 28;
+        const scrollAmount = (cardWidth + gap) * visibleCount;
+        
+        if (direction === 'next') {
+          carousel.scrollLeft += scrollAmount;
+        } else {
+          carousel.scrollLeft -= scrollAmount;
+        }
+        
+        // Loop infinito: si llegamos al final, volver al inicio
+        setTimeout(() => {
+          if (direction === 'next' && carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
+            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+          } else if (direction === 'prev' && carousel.scrollLeft <= 10) {
+            carousel.scrollTo({ left: carousel.scrollWidth, behavior: 'smooth' });
+          }
+        }, 300);
+      }
+      
+      prevBtn.addEventListener('click', () => scroll('prev'));
+      nextBtn.addEventListener('click', () => scroll('next'));
+      
+      // Soporte para arrastre táctil
+      let isDown = false;
+      let startX;
+      let scrollLeftStart;
+      
+      carousel.addEventListener('mousedown', (e) => {
+        isDown = true;
+        carousel.style.cursor = 'grabbing';
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeftStart = carousel.scrollLeft;
+      });
+      
+      carousel.addEventListener('mouseleave', () => {
+        isDown = false;
+        carousel.style.cursor = 'grab';
+      });
+      
+      carousel.addEventListener('mouseup', () => {
+        isDown = false;
+        carousel.style.cursor = 'grab';
+      });
+      
+      carousel.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - carousel.offsetLeft;
+        const walk = (x - startX) * 2;
+        carousel.scrollLeft = scrollLeftStart - walk;
+      });
+    });
+  }
+
+  return { init };
+})();
+
 /* ─── INIT ───────────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   Cart.init();
@@ -931,6 +1004,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Parallax.init();
   CollectionPage.init();
   RandomProductGrid.init();
+  ProductCarousel.init();
   setStickyOffset();
   window.addEventListener('resize', setStickyOffset);
 });

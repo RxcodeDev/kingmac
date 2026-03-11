@@ -1112,6 +1112,71 @@
 }
 
 /* =============================================================================
+   9. PRODUCT CAROUSEL RESPONSIVE
+   ============================================================================= */
+/* Tablet pequeño: 3 productos visibles */
+@media (max-width: 1024px) {
+  .product-carousel > .product-card {
+    flex: 0 0 calc(33.333% - 18.67px); /* 3 cards visible */
+    min-width: 180px;
+  }
+  
+  .carousel-nav {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .carousel-nav svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Móvil grande: 2 productos visibles */
+@media (max-width: 768px) {
+  .product-carousel > .product-card {
+    flex: 0 0 calc(50% - 14px); /* 2 cards visible */
+    min-width: 160px;
+  }
+  
+  .product-carousel {
+    gap: 16px;
+  }
+  
+  .product-carousel-wrapper {
+    gap: 12px;
+  }
+  
+  .carousel-nav {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Móvil pequeño: 1 producto visible */
+@media (max-width: 480px) {
+  .product-carousel > .product-card {
+    flex: 0 0 calc(100% - 8px); /* 1 card visible */
+    min-width: 140px;
+    max-width: 100%;
+  }
+  
+  .product-carousel {
+    gap: 12px;
+  }
+  
+  .carousel-nav {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .carousel-nav svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* =============================================================================
    10. PRINT
    ============================================================================= */
 @media print {
