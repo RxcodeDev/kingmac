@@ -63,22 +63,19 @@
           {{ section.settings.fiscal_address | default: 'PASEO DE LAS FACULTADES 30, 04360, COPILCO UNIVERSIDAD, COYOACAN, CIUDAD DE MEXICO.' }}
         </p>
       </div>
+
+      <div class="footer-col__payment">
+        <h4 class="footer-col__subheading">Métodos de Pago</h4>
+        <p class="footer-col__text footer-col__text--small">
+          {{ section.settings.payment_text_openpay | default: 'Los pagos serán procesados mediante la pasarela de Openpay.' }}
+        </p>
+        <p class="footer-col__text footer-col__text--small">
+          {{ section.settings.payment_text_mercadopago | default: 'Los pagos serán procesados mediante la pasarela de Mercado Pago.' }}
+        </p>
+      </div>
     </div>
 
   </div><!-- /.site-footer__top -->
-
-  <!-- Divider -->
-  <hr class="site-footer__divider" aria-hidden="true">
-
-  <!-- Payment Methods -->
-  <div class="site-footer__payment">
-    <p class="footer-payment__text">
-      {{ section.settings.payment_text_openpay | default: 'Los pagos serán procesados mediante la pasarela de Openpay.' }}
-    </p>
-    <p class="footer-payment__text">
-      {{ section.settings.payment_text_mercadopago | default: 'Los pagos serán procesados mediante la pasarela de Mercado Pago.' }}
-    </p>
-  </div>
 
   <!-- Divider -->
   <hr class="site-footer__divider" aria-hidden="true">

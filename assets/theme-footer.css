@@ -85,8 +85,9 @@
 }
 .footer-col__link:hover { color: #fff; }
 
-/* Fiscal Address */
-.footer-col__fiscal {
+/* Fiscal Address & Payment Methods */
+.footer-col__fiscal,
+.footer-col__payment {
   margin-top: var(--spacing-lg);
   padding-top: var(--spacing-md);
   border-top: 1px solid rgba(255,255,255,0.15);
@@ -106,31 +107,17 @@
   font-size: 0.85rem;
   line-height: 1.5;
   color: rgba(255,255,255,0.75);
+  margin-bottom: var(--spacing-sm);
+}
+
+.footer-col__text--small:last-child {
+  margin-bottom: 0;
 }
 
 .site-footer__divider {
   border: none;
   border-top: 1px solid rgba(255,255,255,0.15);
   margin: 0;
-}
-
-/* Payment Methods */
-.site-footer__payment {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: var(--spacing-lg) var(--spacing-xl);
-  text-align: center;
-}
-
-.footer-payment__text {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.85);
-  margin-bottom: var(--spacing-sm);
-  line-height: 1.6;
-}
-
-.footer-payment__text:last-child {
-  margin-bottom: 0;
 }
 
 .site-footer__bottom {
