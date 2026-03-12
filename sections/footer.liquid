@@ -56,9 +56,29 @@
       <a href="/pages/politica-de-devolucion" class="footer-col__link">Política de devolución</a>
       <a href="/pages/politica-de-entrega" class="footer-col__link">Política de entrega</a>
       <a href="/pages/politica-de-compra" class="footer-col__link">Política de compra</a>
+      
+      <div class="footer-col__fiscal">
+        <h4 class="footer-col__subheading">Domicilio Fiscal</h4>
+        <p class="footer-col__text footer-col__text--small">
+          {{ section.settings.fiscal_address | default: 'PASEO DE LAS FACULTADES 30, 04360, COPILCO UNIVERSIDAD, COYOACAN, CIUDAD DE MEXICO.' }}
+        </p>
+      </div>
     </div>
 
   </div><!-- /.site-footer__top -->
+
+  <!-- Divider -->
+  <hr class="site-footer__divider" aria-hidden="true">
+
+  <!-- Payment Methods -->
+  <div class="site-footer__payment">
+    <p class="footer-payment__text">
+      {{ section.settings.payment_text_openpay | default: 'Los pagos serán procesados mediante la pasarela de Openpay.' }}
+    </p>
+    <p class="footer-payment__text">
+      {{ section.settings.payment_text_mercadopago | default: 'Los pagos serán procesados mediante la pasarela de Mercado Pago.' }}
+    </p>
+  </div>
 
   <!-- Divider -->
   <hr class="site-footer__divider" aria-hidden="true">
@@ -139,6 +159,28 @@
       "type": "url",
       "id": "cookies_url",
       "label": "URL política de cookies"
+    },
+    {
+      "type": "textarea",
+      "id": "fiscal_address",
+      "label": "Domicilio fiscal",
+      "default": "PASEO DE LAS FACULTADES 30, 04360, COPILCO UNIVERSIDAD, COYOACAN, CIUDAD DE MEXICO."
+    },
+    {
+      "type": "header",
+      "content": "Métodos de Pago"
+    },
+    {
+      "type": "text",
+      "id": "payment_text_openpay",
+      "label": "Texto Openpay",
+      "default": "Los pagos serán procesados mediante la pasarela de Openpay."
+    },
+    {
+      "type": "text",
+      "id": "payment_text_mercadopago",
+      "label": "Texto Mercado Pago",
+      "default": "Los pagos serán procesados mediante la pasarela de Mercado Pago."
     },
     {
       "type": "header",
