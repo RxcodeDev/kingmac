@@ -3,7 +3,7 @@
    ============================================================================= */
 
 .product-grid-section {
-  padding: 0;
+  padding: var(--spacing-xl) 0 var(--spacing-md);
   margin-top: 0;
   width: 100%;
 }
@@ -26,7 +26,7 @@
   align-items: center;
   gap: 16px;
   width: 100%;
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-md);
 }
 
 /* ─── CAROUSEL NAVIGATION BUTTONS ─────────────────────────────────────────── */
