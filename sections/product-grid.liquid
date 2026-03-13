@@ -32,7 +32,11 @@
 
         {%- if _grid_products != blank -%}
 
-          {%- for product in _grid_products -%}
+          {%- comment -%} Calcular mitad de productos para dividir entre carruseles {%- endcomment -%}
+          {%- assign total_products = _grid_products.size -%}
+          {%- assign half_count = total_products | divided_by: 2 -%}
+
+          {%- for product in _grid_products limit: half_count -%}
             {%- if product.featured_image != blank -%}
               {%- render 'product-card',
                 card_product: product,
