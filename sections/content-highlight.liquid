@@ -1,32 +1,13 @@
 {%- comment -%}
-  Resolve product by handle (all_products['handle'] = direct lookup, no iteration limit).
-  Falls back to the product picker, then to a random product, then to static manual fields.
+  Muestra el primer producto de la colección configurada (parallax).
 {%- endcomment -%}
 
 {%- assign _hl_product = nil -%}
-{%- assign _handle     = section.settings.product_handle | strip | downcase -%}
+{%- assign _collection = collections[section.settings.collection] -%}
 
-{%- if _handle != blank -%}
-  {%- assign _hl_product = all_products[_handle] -%}
-  {%- if _hl_product.id == blank -%}
-    {%- assign _hl_product = nil -%}
-  {%- endif -%}
+{%- if _collection != blank and _collection.products_count > 0 -%}
+  {%- assign _hl_product = _collection.products.first -%}
 {%- endif -%}
-
-{%- unless _hl_product -%}
-  {%- assign _hl_product = section.settings.product -%}
-{%- endunless -%}
-
-{%- comment -%} Si aún no hay producto, tomar el primer producto de la colección seleccionada {%- endcomment -%}
-{%- unless _hl_product -%}
-  {%- assign _collection = collections[section.settings.collection] -%}
-  {%- if _collection != blank and _collection.products_count > 0 -%}
-    {%- assign _hl_product = _collection.products.first -%}
-  {%- elsif collections.all.products.size > 0 -%}
-    {%- assign random_index = 'now' | date: '%S' | modulo: collections.all.products.size -%}
-    {%- assign _hl_product = collections.all.products[random_index] -%}
-  {%- endif -%}
-{%- endunless -%}
 
 {%- assign _is_real_product = false -%}
 {%- if _hl_product != blank -%}
