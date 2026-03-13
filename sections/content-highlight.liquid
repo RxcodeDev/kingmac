@@ -1,9 +1,9 @@
 {%- comment -%}
-  Muestra el primer producto de la colección configurada (parallax).
+  Muestra el primer producto de la colección parallax.
 {%- endcomment -%}
 
 {%- assign _hl_product = nil -%}
-{%- assign _collection = collections[section.settings.collection] -%}
+{%- assign _collection = collections['parallax'] -%}
 
 {%- if _collection != blank and _collection.products_count > 0 -%}
   {%- assign _hl_product = _collection.products.first -%}
