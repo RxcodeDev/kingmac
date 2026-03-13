@@ -612,6 +612,78 @@
     width: 100%;
     object-fit: cover;
   }
+
+  /* ─ Footer: optimizar a una columna ─ */
+  .site-footer__top {
+    grid-template-columns: 1fr;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    gap: var(--spacing-lg);
+  }
+
+  .footer-col {
+    width: 100%;
+  }
+
+  /* Logo más compacto en mobile */
+  .footer-col__logo img {
+    height: 60px;
+  }
+
+  /* Iconos sociales más grandes y mejor espaciados */
+  .footer-col__social {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    justify-content: flex-start;
+  }
+
+  .footer-col__social-link {
+    width: 44px;
+    height: 44px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+  }
+
+  .footer-col__social-link:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.6);
+    transform: translateY(-2px);
+  }
+
+  .footer-col__social-link svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Headings más legibles */
+  .footer-col__heading {
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .footer-col__text,
+  .footer-col__link {
+    font-size: 0.85rem;
+  }
+
+  /* Subheadings más compactos */
+  .footer-col__fiscal,
+  .footer-col__payment {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+  }
+
+  .footer-col__subheading {
+    font-size: 0.8rem;
+  }
+
+  .footer-col__text--small {
+    font-size: 0.8rem;
+  }
 }
 
 /* =============================================================================
@@ -786,124 +858,121 @@
     font-size: 1.6rem;
   }
 
-  /* ─ Footer: layout 2 columnas — izq: marca+info · der: legal ─ */
+  /* ─ Footer: layout optimizado para mobile ─ */
   .site-footer__top {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
-    gap: var(--spacing-sm) var(--spacing-lg);
+    grid-template-columns: 1fr;
+    padding: var(--spacing-lg) var(--spacing-md);
+    gap: var(--spacing-lg);
   }
 
-  /* Col 1: Logo + redes — fila 1, col izquierda */
+  /* Logo y redes sociales — hacerlas destacar */
   .site-footer__top .footer-col:nth-child(1) {
-    grid-column: 1;
-    grid-row: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: var(--spacing-sm);
-    padding-bottom: var(--spacing-sm);
+    align-items: center;
+    text-align: center;
+    padding-bottom: var(--spacing-lg);
     border-bottom: 1px solid rgba(255,255,255,0.15);
   }
 
   .site-footer__top .footer-col:nth-child(1) .footer-col__logo {
-    margin-bottom: 0;
-    flex-shrink: 0;
+    margin-bottom: var(--spacing-md);
   }
 
   .site-footer__top .footer-col:nth-child(1) .footer-col__logo img {
-    height: 40px;
+    height: 50px;
   }
 
+  /* Redes sociales: más prominentes y centradas */
   .site-footer__top .footer-col__social {
-    gap: 10px;
+    display: flex;
+    gap: var(--spacing-md);
     margin-top: 0;
-    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .site-footer__top .footer-col__social-link {
-    width: 36px;
-    height: 36px;
-    border: 1px solid rgba(255,255,255,0.35);
+    width: 48px;
+    height: 48px;
+    border: 2px solid rgba(255,255,255,0.35);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s ease, border-color 0.2s ease;
+    transition: all 0.25s ease;
   }
 
   .site-footer__top .footer-col__social-link:hover {
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.15);
     border-color: rgba(255,255,255,0.7);
-    opacity: 1;
+    transform: scale(1.1);
   }
 
   .site-footer__top .footer-col__social-link svg {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
   }
 
-  /* Col 2: Servicio al cliente — fila 2, col izquierda */
-  .site-footer__top .footer-col:nth-child(2) {
-    grid-column: 1;
-    grid-row: 2;
-    padding-top: var(--spacing-sm);
-  }
-
-  /* Col 3: Contacto — fila 3, col izquierda */
-  .site-footer__top .footer-col:nth-child(3) {
-    grid-column: 1;
-    grid-row: 3;
-  }
-
-  /* Col 4: Términos — col derecha, ocupa todas las filas */
+  /* Columnas de información: más compactas */
+  .site-footer__top .footer-col:nth-child(2),
+  .site-footer__top .footer-col:nth-child(3),
   .site-footer__top .footer-col:nth-child(4) {
-    grid-column: 2;
-    grid-row: 1 / 4;
-    border-left: 1px solid rgba(255,255,255,0.15);
-    padding-left: var(--spacing-md);
-    display: flex;
-    flex-direction: column;
+    display: block;
+    border: none;
+    padding: 0;
   }
 
-  .site-footer__top .footer-col:nth-child(4) .footer-col__heading {
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.65);
-    margin-bottom: var(--spacing-sm);
-  }
-
-  .site-footer__top .footer-col:nth-child(4) .footer-col__link {
-    font-size: 0.82rem;
-    padding: 7px 0;
-    margin-bottom: 0;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.9);
-  }
-
-  .site-footer__top .footer-col:nth-child(4) .footer-col__link:last-child {
-    border-bottom: none;
-  }
-
-  /* Tipografía base en footer mobile */
   .site-footer .footer-col__heading {
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    margin-bottom: 6px;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--spacing-sm);
+    color: rgba(255,255,255,0.8);
   }
 
   .site-footer .footer-col__link,
   .site-footer .footer-col__text {
-    font-size: 0.82rem;
-    margin-bottom: 4px;
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.5;
+  }
+
+  .site-footer .footer-col__link {
+    display: inline-block;
+    padding: 4px 0;
+  }
+
+  /* Subsecciones más compactas */
+  .footer-col__fiscal,
+  .footer-col__payment {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer-col__subheading {
+    font-size: 0.72rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .footer-col__text--small {
+    font-size: 0.78rem;
+    line-height: 1.4;
   }
 
   .site-footer__bottom {
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: 0.72rem;
-    letter-spacing: 0.02em;
-    color: rgba(255,255,255,0.5);
+    padding: var(--spacing-md) var(--spacing-md);
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
+  .powered-by {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+  }
+
+  .powered-by img {
+    height: 50px;
   }
 
   /* ─ Cart drawer ─ */
@@ -1035,28 +1104,53 @@
     font-size: 1.6rem;
   }
 
-  /* ─ Footer ─ */
+  /* ─ Footer: mantener iconos sociales prominentes incluso en pantallas pequeñas ─ */
   .site-footer__top {
     padding: var(--spacing-md) var(--spacing-sm);
-    gap: var(--spacing-xs) var(--spacing-sm);
-  }
-
-  .site-footer__top .footer-col:nth-child(4) {
-    padding-left: var(--spacing-sm);
+    gap: var(--spacing-md);
   }
 
   .site-footer__top .footer-col:nth-child(1) .footer-col__logo img {
-    height: 32px;
+    height: 45px;
+  }
+
+  /* Mantener iconos sociales visibles y fáciles de tocar */
+  .site-footer__top .footer-col__social {
+    gap: var(--spacing-sm);
   }
 
   .site-footer__top .footer-col__social-link {
-    width: 30px;
-    height: 30px;
+    width: 42px;
+    height: 42px;
+    border-width: 2px;
   }
 
   .site-footer__top .footer-col__social-link svg {
-    width: 15px;
-    height: 15px;
+    width: 19px;
+    height: 19px;
+  }
+
+  /* Tipografía ajustada pero legible */
+  .site-footer .footer-col__heading {
+    font-size: 0.7rem;
+    margin-bottom: 6px;
+  }
+
+  .site-footer .footer-col__link,
+  .site-footer .footer-col__text {
+    font-size: 0.8rem;
+  }
+
+  .footer-col__text--small {
+    font-size: 0.75rem;
+  }
+
+  .powered-by {
+    margin-top: var(--spacing-xs);
+  }
+
+  .powered-by img {
+    height: 45px;
   }
 
   /* ─ Collection page ─ */
