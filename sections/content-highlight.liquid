@@ -17,12 +17,11 @@
   {%- assign _hl_product = section.settings.product -%}
 {%- endunless -%}
 
-{%- comment -%} Si aún no hay producto, tomar uno de la colección seleccionada o random de la tienda {%- endcomment -%}
+{%- comment -%} Si aún no hay producto, tomar el primer producto de la colección seleccionada {%- endcomment -%}
 {%- unless _hl_product -%}
   {%- assign _collection = collections[section.settings.collection] -%}
   {%- if _collection != blank and _collection.products_count > 0 -%}
-    {%- assign random_index = 'now' | date: '%S' | modulo: _collection.products_count -%}
-    {%- assign _hl_product = _collection.products[random_index] -%}
+    {%- assign _hl_product = _collection.products.first -%}
   {%- elsif collections.all.products.size > 0 -%}
     {%- assign random_index = 'now' | date: '%S' | modulo: collections.all.products.size -%}
     {%- assign _hl_product = collections.all.products[random_index] -%}
