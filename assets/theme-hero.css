@@ -16,7 +16,7 @@
 .hero-slide {
   min-width: 100vw;
   width: 100vw;
-  height: clamp(360px, calc(90vh - var(--header-height, 115px)), 900px);
+  height: clamp(360px, calc(90vh - var(--header-height, 115px) - var(--spacing-xl)), 900px);
   min-height: 360px;
   position: relative;
   overflow: hidden;
