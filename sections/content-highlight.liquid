@@ -1,34 +1,18 @@
 {%- comment -%}
-  Muestra el primer producto de la colección parallax.
+  Busca el producto ESTERILIZADOR directamente por handle.
 {%- endcomment -%}
 
-{%- assign _hl_product = nil -%}
+{%- assign _hl_product = all_products['esterilizador-a-vapor-kingden-clase-n-azul-18l'] -%}
 
-{%- comment -%} Intentar con diferentes variaciones del handle {%- endcomment -%}
-{%- if collections['parallax'] != blank and collections['parallax'].products_count > 0 -%}
-  {%- assign _hl_product = collections['parallax'].products.first -%}
-{%- elsif collections.parallax != blank and collections.parallax.products_count > 0 -%}
-  {%- assign _hl_product = collections.parallax.products.first -%}
-{%- elsif collections.all.products_count > 0 -%}
-  {%- comment -%} Fallback: buscar producto con tag parallax {%- endcomment -%}
+{%- comment -%} Si no lo encontró, buscar por SKU o título {%- endcomment -%}
+{%- if _hl_product == blank -%}
   {%- for product in collections.all.products -%}
-    {%- if product.tags contains 'parallax' or product.collections contains 'parallax' -%}
+    {%- if product.title contains 'ESTERILIZADOR' or product.variants.first.sku == 'KIN-18N' -%}
       {%- assign _hl_product = product -%}
       {%- break -%}
     {%- endif -%}
   {%- endfor -%}
 {%- endif -%}
-
-{%- comment -%} DEBUG: Ver qué colecciones están disponibles {%- endcomment -%}
-<div style="background: yellow; padding: 20px; color: black; font-size: 14px; border: 3px solid red; margin: 20px;" data-debug="collections">
-  <strong>DEBUG INFO:</strong><br>
-  Collections available: {{ collections | map: 'handle' | join: ', ' }}<br>
-  Parallax via ['parallax']: {{ collections['parallax'] }}<br>
-  Parallax via .parallax: {{ collections.parallax }}<br>
-  Parallax products count: {{ collections['parallax'].products_count }}<br>
-  All products count: {{ collections.all.products_count }}<br>
-  <strong>Product found: {{ _hl_product.title }}</strong>
-</div>
 
 {%- assign _is_real_product = false -%}
 {%- if _hl_product != blank -%}
