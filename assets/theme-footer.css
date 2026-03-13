@@ -114,6 +114,37 @@
   margin-bottom: 0;
 }
 
+/* Legal info row (fiscal address & payment methods) */
+.site-footer__legal {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-legal__item {
+  text-align: left;
+}
+
+.footer-legal__heading {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-background);
+}
+
+.footer-legal__text {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.7);
+}
+
 .site-footer__divider {
   border: none;
   border-top: 1px solid rgba(255,255,255,0.15);
