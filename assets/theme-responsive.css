@@ -346,8 +346,8 @@
     height: 60px;
   }
 
-  .related-products__grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+  .related-products__grid .product-card {
+    width: 200px;
   }
 
   .product-details {
@@ -580,8 +580,8 @@
     height: 52px;
   }
 
-  .related-products__grid {
-    grid-template-columns: 1fr !important;
+  .related-products__grid .product-card {
+    width: 180px;
   }
 
   /* ─ Catalogs ─ */
