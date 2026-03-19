@@ -779,6 +779,7 @@
   scrollbar-width: thin;
   scrollbar-color: var(--color-accent) var(--color-light-gray);
   padding-bottom: var(--spacing-md);
+  scroll-snap-type: x mandatory;
 }
 
 .related-products__grid::-webkit-scrollbar {
@@ -801,7 +802,9 @@
 
 .related-products__grid .product-card {
   flex: 0 0 auto;
-  width: 220px;
-  max-width: none;
+  width: calc(25% - 18px);
+  min-width: 240px;
+  max-width: 280px;
   margin: 0;
+  scroll-snap-align: start;
 }

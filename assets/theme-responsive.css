@@ -347,7 +347,8 @@
   }
 
   .related-products__grid .product-card {
-    width: 200px;
+    width: calc(50% - 12px);
+    min-width: 280px;
   }
 
   .product-details {
@@ -581,7 +582,14 @@
   }
 
   .related-products__grid .product-card {
-    width: 180px;
+    width: calc(100% - 32px);
+    min-width: 260px;
+    max-width: 100%;
+  }
+
+  .related-products__grid {
+    padding: 0 var(--spacing-md);
+    gap: var(--spacing-md);
   }
 
   /* ─ Catalogs ─ */
@@ -801,6 +809,16 @@
   .product-card__btn {
     padding: 5px 8px;
     font-size: 0.62rem;
+  }
+
+  /* ─ Related products: 1 card a la vez en móviles ─ */
+  .related-products__grid .product-card {
+    width: calc(100% - 48px);
+    min-width: auto;
+  }
+
+  .related-products__grid {
+    padding: 0 var(--spacing-lg);
   }
 
   /* ─ Featured banners ─ */
@@ -1096,6 +1114,16 @@
   /* ─ Catalogs ─ */
   .catalogs-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  /* ─ Related products: 1 card completa en pantallas pequeñas ─ */
+  .related-products__grid .product-card {
+    width: calc(100% - 32px);
+  }
+
+  .related-products__grid {
+    padding: 0 var(--spacing-md);
     gap: var(--spacing-sm);
   }
 
