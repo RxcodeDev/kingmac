@@ -615,7 +615,6 @@
   }
 
   .product-grid-section .section-title {
-    padding: 0 var(--spacing-md);
   }
 
   .product-carousel > .product-card {
@@ -891,13 +890,12 @@
 
   .product-grid-section .section-title,
   .shipping-banner__text {
-    padding: 0 var(--spacing-md);
+    padding: 0 2vh;
   }
 
   .product-carousel > .product-card {
     width: 100vw;
     min-width: 100vw;
-    padding: 0 var(--spacing-md);
     box-sizing: border-box;
   }
 
