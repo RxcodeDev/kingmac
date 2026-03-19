@@ -48,6 +48,8 @@
   /* ─ Base ─ */
   .section-title {
     font-size: 1.75rem;
+    padding-top: 2.5vh;
+    padding-bottom: 1.75vh;
   }
 
   /* ─ Header ─ */
@@ -138,6 +140,8 @@
   /* ─ Base ─ */
   .section-title {
     font-size: 1.6rem;
+    padding-top: 3vh;
+    padding-bottom: 2vh;
   }
 
   .container {
@@ -526,6 +530,8 @@
   /* ─ Base ─ */
   .section-title {
     font-size: 1.5rem;
+    padding-top: 3vh;
+    padding-bottom: 2vh;
   }
 
   /* ─ Mobile nav horizontal ─ */
@@ -752,6 +758,8 @@
   /* ─ Base ─ */
   .section-title {
     font-size: 1.4rem;
+    padding-top: 3vh;
+    padding-bottom: 2vh;
   }
 
   .container {
@@ -891,6 +899,11 @@
   .product-grid-section .section-title,
   .shipping-banner__text {
     padding: 0 2vh;
+  }
+
+  .product-grid-section .section-title {
+    padding-top: 3vh;
+    padding-bottom: 2vh;
   }
 
   .product-carousel > .product-card {
@@ -1125,6 +1138,8 @@
   /* ─ Base ─ */
   .section-title {
     font-size: 1.25rem;
+    padding-top: 3vh;
+    padding-bottom: 2vh;
   }
 
   body {
@@ -1233,6 +1248,11 @@
   .product-grid-section .section-title,
   .shipping-banner__text {
     padding: 0 var(--spacing-sm);
+  }
+
+  .product-grid-section .section-title {
+    padding-top: 3vh;
+    padding-bottom: 2vh;
   }
 
   .product-carousel > .product-card {
@@ -1410,6 +1430,11 @@
   .product-grid-section .section-title,
   .shipping-banner__text {
     padding: 0 var(--spacing-md);
+  }
+
+  .product-grid-section .section-title {
+    padding-top: 3vh;
+    padding-bottom: 2vh;
   }
 
   .product-carousel > .product-card {

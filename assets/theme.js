@@ -876,79 +876,61 @@ const MobileNavAutoScroll = (() => {
     const navScroll = $('.mobile-nav-horizontal__scroll');
     if (!navScroll) return;
 
-    // Don't auto-scroll if we're already on a collection/category page
-    const isCollectionPage = document.body.classList.contains('template-collection') || 
+    const list = navScroll.querySelector('.mobile-nav-horizontal__list');
+    if (!list) return;
+
+    const isCollectionPage = document.body.classList.contains('template-collection') ||
                              window.location.pathname.includes('/collections/');
-    
-    let autoScrollInterval = null;
-    let shouldScroll = !isCollectionPage; // Don't scroll if already in a section
 
-    function startAutoScroll() {
-      if (!shouldScroll || autoScrollInterval) return;
-      
-      autoScrollInterval = setInterval(() => {
-        if (!shouldScroll) {
-          clearInterval(autoScrollInterval);
-          autoScrollInterval = null;
-          return;
-        }
+    // ── Clonar items para loop infinito sin salto ──
+    const originalItems = Array.from(list.children);
+    originalItems.forEach(item => {
+      const clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      list.appendChild(clone);
+    });
 
-        // Move left to right
-        navScroll.scrollLeft += 1.5;
-        
-        // If reached end, restart from beginning
-        const maxScroll = navScroll.scrollWidth - navScroll.clientWidth;
-        if (navScroll.scrollLeft >= maxScroll - 5) {
-          navScroll.scrollLeft = 0;
-        }
-      }, 30);
+    const originalWidth = originalItems.reduce((acc, el) => acc + el.offsetWidth, 0);
+
+    let animFrame = null;
+    let stopped = false;
+
+    function tick() {
+      if (stopped) return;
+      navScroll.scrollLeft += 1.2;
+      // Cuando llega al ancho original, salta silenciosamente al inicio (sin salto visible)
+      if (navScroll.scrollLeft >= originalWidth) {
+        navScroll.scrollLeft -= originalWidth;
+      }
+      animFrame = requestAnimationFrame(tick);
     }
 
     function stopAutoScroll() {
-      shouldScroll = false;
-      if (autoScrollInterval) {
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = null;
-      }
+      stopped = true;
+      if (animFrame) cancelAnimationFrame(animFrame);
+      animFrame = null;
     }
 
-    // Handle link clicks
-    const navLinks = $$('.mobile-nav-horizontal__link');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        // Don't prevent default - allow navigation to work
-        
-        // STOP scrolling permanently when a category is selected
+    // Clicks solo en items originales (no clones)
+    originalItems.forEach(item => {
+      const link = item.querySelector('.mobile-nav-horizontal__link');
+      if (!link) return;
+      link.addEventListener('click', function () {
         stopAutoScroll();
-        
-        // Remove active class from all items
-        $$('.mobile-nav-horizontal__item').forEach(item => {
-          item.classList.remove('active');
-        });
-        
-        // Add active to clicked item
-        const parentItem = this.closest('.mobile-nav-horizontal__item');
-        if (parentItem) {
-          parentItem.classList.add('active');
-        }
-        
-        // Center the selected item
-        this.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        $$('.mobile-nav-horizontal__item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       });
     });
 
-    // Only start auto-scroll on home page, not on collection pages
-    if (!isCollectionPage) {
-      setTimeout(() => {
-        if (shouldScroll) {
-          startAutoScroll();
-        }
-      }, 1000);
-    }
-
-    // Stop on any user interaction
     navScroll.addEventListener('touchstart', stopAutoScroll, { passive: true });
     navScroll.addEventListener('mousedown', stopAutoScroll);
+
+    if (!isCollectionPage) {
+      setTimeout(() => {
+        if (!stopped) requestAnimationFrame(tick);
+      }, 800);
+    }
   }
 
   return { init };
