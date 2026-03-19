@@ -52,12 +52,12 @@
 }
 
 .shipping-section {
-  padding-top: var(--spacing-xxl);
-  padding-bottom: var(--spacing-xxl);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .shipping-section__grid {
-  padding-top: var(--spacing-xl);
+  padding-top: 0;
   max-width: 100%;
   padding-left: var(--spacing-sm);
   padding-right: var(--spacing-sm);

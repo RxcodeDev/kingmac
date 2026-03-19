@@ -147,7 +147,7 @@ button, input, select, textarea {
   text-align: center;
   color: var(--color-black);
   margin: 0;
-  padding: var(--spacing-md) 0;
+  padding: 0;
   letter-spacing: 0.04em;
   width: 100%;
   display: flex;
