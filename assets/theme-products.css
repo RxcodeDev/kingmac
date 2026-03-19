@@ -3,7 +3,7 @@
    ============================================================================= */
 
 .product-grid-section {
-  padding: 1.5vh 0;
+  padding: var(--spacing-xxl) 0;
   margin-top: 0;
   width: 100%;
 }
