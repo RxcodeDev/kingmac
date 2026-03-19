@@ -147,10 +147,13 @@ button, input, select, textarea {
   text-align: center;
   color: var(--color-black);
   margin: 0;
-  padding: var(--spacing-lg) 0;
+  padding: var(--spacing-md) 0;
   letter-spacing: 0.04em;
   width: 100%;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 /* ─── BUTTONS ────────────────────────────────────────────────────────────── */
