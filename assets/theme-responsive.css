@@ -582,20 +582,29 @@
   }
 
   /* ─ Related products: 1 card completa y centrada en móviles ─ */
-  .related-products__grid .product-card {
-    width: 100%;
-    min-width: 100%;
+  .related-products-section .container {
+    padding: 0;
     max-width: 100%;
   }
 
-  .related-products__grid {
-    padding: 0;
-    gap: var(--spacing-lg);
-    scroll-padding: 0;
+  .related-products__title {
+    padding: 0 var(--spacing-md);
   }
 
-  .related-products-section .container {
+  .related-products__grid .product-card {
+    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
+    scroll-snap-align: center;
     padding: 0 var(--spacing-md);
+    box-sizing: border-box;
+  }
+
+  .related-products__grid {
+    gap: 0;
+    scroll-padding: 0;
+    padding: 0;
+    margin: 0;
   }
 
   /* ─ Catalogs ─ */
@@ -818,14 +827,24 @@
   }
 
   /* ─ Related products: 1 card completa centrada en móviles ─ */
+  .related-products-section .container {
+    padding: 0;
+  }
+
+  .related-products__title {
+    padding: 0 var(--spacing-md);
+  }
+
   .related-products__grid .product-card {
-    width: 100%;
-    min-width: 100%;
+    width: 100vw;
+    min-width: 100vw;
+    padding: 0 var(--spacing-md);
+    box-sizing: border-box;
   }
 
   .related-products__grid {
     padding: 0;
-    gap: var(--spacing-xl);
+    gap: 0;
   }
 
   /* ─ Featured banners ─ */
@@ -1123,20 +1142,26 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-sm);
   }
-perfectamente centrada ─ */
+
+  /* ─ Related products: 1 card perfectamente centrada ─ */
+  .related-products-section .container {
+    padding: 0;
+  }
+
+  .related-products__title {
+    padding: 0 var(--spacing-sm);
+  }
+
   .related-products__grid .product-card {
-    width: 100%;
-    min-width: 100%;
+    width: 100vw;
+    min-width: 100vw;
+    padding: 0 var(--spacing-sm);
+    box-sizing: border-box;
   }
 
   .related-products__grid {
     padding: 0;
-    gap: var(--spacing-lg);
-  }
-
-  .related-products-section .container {
-    padding: 0ing: 0 var(--spacing-md);
-    gap: var(--spacing-sm);
+    gap: 0;
   }
 
   /* ─ Promo card ─ */
