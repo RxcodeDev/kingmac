@@ -581,15 +581,21 @@
     height: 52px;
   }
 
+  /* ─ Related products: 1 card completa y centrada en móviles ─ */
   .related-products__grid .product-card {
-    width: calc(100% - 32px);
-    min-width: 260px;
+    width: 100%;
+    min-width: 100%;
     max-width: 100%;
   }
 
   .related-products__grid {
+    padding: 0;
+    gap: var(--spacing-lg);
+    scroll-padding: 0;
+  }
+
+  .related-products-section .container {
     padding: 0 var(--spacing-md);
-    gap: var(--spacing-md);
   }
 
   /* ─ Catalogs ─ */
@@ -811,14 +817,15 @@
     font-size: 0.62rem;
   }
 
-  /* ─ Related products: 1 card a la vez en móviles ─ */
+  /* ─ Related products: 1 card completa centrada en móviles ─ */
   .related-products__grid .product-card {
-    width: calc(100% - 48px);
-    min-width: auto;
+    width: 100%;
+    min-width: 100%;
   }
 
   .related-products__grid {
-    padding: 0 var(--spacing-lg);
+    padding: 0;
+    gap: var(--spacing-xl);
   }
 
   /* ─ Featured banners ─ */
@@ -1116,14 +1123,19 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-sm);
   }
-
-  /* ─ Related products: 1 card completa en pantallas pequeñas ─ */
+perfectamente centrada ─ */
   .related-products__grid .product-card {
-    width: calc(100% - 32px);
+    width: 100%;
+    min-width: 100%;
   }
 
   .related-products__grid {
-    padding: 0 var(--spacing-md);
+    padding: 0;
+    gap: var(--spacing-lg);
+  }
+
+  .related-products-section .container {
+    padding: 0ing: 0 var(--spacing-md);
     gap: var(--spacing-sm);
   }
 
