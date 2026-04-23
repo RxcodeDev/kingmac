@@ -62,21 +62,13 @@
               "link_text": "Iniciar sesión",
               "link_url": ""
             }
-          },
-          "link_g3DQGL": {
-            "type": "link",
-            "settings": {
-              "link_text": "Facturacion",
-              "link_url": "https://bdu.facturadorenlinea.com/"
-            }
           }
         },
         "block_order": [
           "announcement-bar-0",
           "announcement-bar-1",
           "announcement-bar-2",
-          "announcement-bar-3",
-          "link_g3DQGL"
+          "announcement-bar-3"
         ],
         "settings": {}
       },
