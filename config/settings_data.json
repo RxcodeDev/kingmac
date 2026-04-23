@@ -1,24 +1,185 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
-    "color_primary":    "#1B2A4A",
-    "color_accent":     "#E87722",
-    "color_secondary":  "#12448F",
+    "color_primary": "#1B2A4A",
+    "color_accent": "#E87722",
+    "color_secondary": "#12448F",
     "color_background": "#FFFFFF",
-    "color_text":       "#333333",
-    "color_topbar":     "#000000",
-    "color_footer_bg":  "#E87722",
+    "color_text": "#333333",
+    "color_topbar": "#000000",
+    "color_footer_bg": "#E87722",
     "font_heading": "Barlow Condensed",
-    "font_body":    "Roboto",
-    "social_tiktok":    "https://www.tiktok.com/@kingdenmx?is_from_webapp=1&sender_device=pc",
+    "font_body": "Roboto",
+    "social_tiktok": "https://www.tiktok.com/@kingdenmx?is_from_webapp=1&sender_device=pc",
     "social_instagram": "https://www.instagram.com/kingdenmx/",
-    "social_facebook":  "https://www.facebook.com/share/1CJYh6FT2a/?mibextid=wwXIfr",
-    "whatsapp_number":   "525534344508",
-    "contact_phone":     "55 5659 5681",
-    "cart_title":           "Tu Carrito",
-    "cart_empty_text":      "Tu carrito está vacío.",
-    "cart_total_label":     "Total:",
-    "cart_view_label":      "Ver Carrito",
-    "cart_checkout_label":  "Proceder al Pago"
+    "social_facebook": "https://www.facebook.com/share/1CJYh6FT2a/?mibextid=wwXIfr",
+    "whatsapp_number": "525534344508",
+    "contact_phone": "55 5659 5681",
+    "cart_title": "Tu Carrito",
+    "cart_empty_text": "Tu carrito está vacío.",
+    "cart_total_label": "Total:",
+    "cart_view_label": "Ver Carrito",
+    "cart_checkout_label": "Proceder al Pago",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "blocks": {
+          "announcement-bar-0": {
+            "type": "icon_text",
+            "settings": {
+              "icon": "package",
+              "text": "Buscamos distribuidores",
+              "link_url": "/pages/contact"
+            }
+          },
+          "announcement-bar-1": {
+            "type": "icon_text",
+            "settings": {
+              "icon": "lock",
+              "text": "Pago seguro",
+              "link_url": ""
+            }
+          },
+          "announcement-bar-2": {
+            "type": "icon_text",
+            "settings": {
+              "icon": "truck",
+              "text": "Entrega dentro de 3-5 días",
+              "link_url": ""
+            }
+          },
+          "announcement-bar-3": {
+            "type": "link",
+            "settings": {
+              "link_text": "Iniciar sesión",
+              "link_url": ""
+            }
+          },
+          "link_g3DQGL": {
+            "type": "link",
+            "settings": {
+              "link_text": "Facturacion",
+              "link_url": ""
+            }
+          }
+        },
+        "block_order": [
+          "announcement-bar-0",
+          "announcement-bar-1",
+          "announcement-bar-2",
+          "announcement-bar-3",
+          "link_g3DQGL"
+        ],
+        "settings": {}
+      },
+      "header": {
+        "type": "header",
+        "blocks": {
+          "header-0": {
+            "type": "nav_item",
+            "settings": {
+              "label": "TODOS LOS PRODUCTOS",
+              "link_url": "/collections/all",
+              "active": false
+            }
+          },
+          "header-1": {
+            "type": "nav_item",
+            "settings": {
+              "label": "LABORATORIO",
+              "link_url": "",
+              "active": true
+            }
+          },
+          "header-2": {
+            "type": "nav_item",
+            "settings": {
+              "label": "EQUIPO",
+              "link_url": "",
+              "active": false
+            }
+          },
+          "header-3": {
+            "type": "nav_item",
+            "settings": {
+              "label": "INSTRUMENTAL",
+              "link_url": "",
+              "active": false
+            }
+          },
+          "header-4": {
+            "type": "nav_item",
+            "settings": {
+              "label": "PRACTICA",
+              "link_url": "",
+              "active": false
+            }
+          },
+          "header-5": {
+            "type": "nav_item",
+            "settings": {
+              "label": "ORTODONCIA",
+              "link_url": "",
+              "active": false
+            }
+          },
+          "header-6": {
+            "type": "nav_item",
+            "settings": {
+              "label": "UNIDADES",
+              "link_url": "",
+              "active": false
+            }
+          },
+          "header-7": {
+            "type": "nav_item",
+            "settings": {
+              "label": "MAYOREO",
+              "link_url": "",
+              "active": false
+            }
+          }
+        },
+        "block_order": [
+          "header-0",
+          "header-1",
+          "header-2",
+          "header-3",
+          "header-4",
+          "header-5",
+          "header-6",
+          "header-7"
+        ],
+        "settings": {
+          "search_placeholder": "Buscar productos..."
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "col2_heading": "SERVICIO AL CLIENTE",
+          "col2_email": "kingdenmex@gmail.com",
+          "col3_heading": "CONTACTO",
+          "col3_phone": "55 5659 5681",
+          "col4_heading": "TÉRMINOS Y CONDICIONES",
+          "privacy_policy_url": "",
+          "cookies_url": "",
+          "fiscal_address": "PASEO DE LAS FACULTADES 30, 04360, COPILCO UNIVERSIDAD, COYOACAN, CIUDAD DE MEXICO.",
+          "payment_text_openpay": "Los pagos serán procesados mediante la pasarela de Openpay.",
+          "payment_text_mercadopago": "Los pagos serán procesados mediante la pasarela de Mercado Pago.",
+          "copyright_text": "© KINGDEN 2026 TODOS LOS DERECHOS RESERVADOS"
+        }
+      }
+    },
+    "content_for_index": []
   },
   "presets": {}
 }
