@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "facturacion_content": {
+      "type": "facturacion",
+      "settings": {}
+    }
+  },
+  "order": ["facturacion_content"]
+}

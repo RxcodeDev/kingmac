@@ -1,0 +1,42 @@
+{%- comment -%}
+  SECTION: facturacion.liquid
+  Renders the facturación page with a full-screen iframe.
+{%- endcomment -%}
+
+<div class="facturacion-page">
+  <iframe
+    src="https://bdu.facturadorenlinea.com/"
+    class="facturacion-page__iframe"
+    title="Facturación en línea"
+    allowfullscreen
+    loading="lazy"
+  ></iframe>
+</div>
+
+<style>
+  .facturacion-page {
+    width: 100%;
+    height: calc(100vh - var(--header-height, 115px));
+    display: flex;
+    flex-direction: column;
+  }
+
+  .facturacion-page__iframe {
+    width: 100%;
+    flex: 1;
+    border: none;
+    display: block;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Facturación",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Facturación"
+    }
+  ]
+}
+{% endschema %}

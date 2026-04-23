@@ -235,6 +235,23 @@
 }
 .cart-btn:hover { background: rgba(255,255,255,0.1); }
 
+/* ─── FACTURACIÓN LINK ───────────────────────────────────────────────────── */
+.facturacion-btn {
+  display: flex;
+  align-items: center;
+  color: var(--color-background);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: var(--border-radius);
+  transition: background var(--transition);
+  white-space: nowrap;
+}
+.facturacion-btn:hover { background: rgba(255,255,255,0.1); }
+
 .cart-btn__count {
   background: var(--color-accent);
   color: var(--color-background);
